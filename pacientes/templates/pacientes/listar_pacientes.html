@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<p></p>
+<h2>Lista de Pacientes</h2>
+
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+    </ul>
+</nav>
+
+    {% for paciente in pacientes %}
+<li>
+        {{ paciente.nome }}
+</li>
+<nav>
+    <ul class="nav-links">
+        <li><a href="{% url 'detalhes_paciente' paciente.id %}"> Ver detalhes</a></li><!--Ver arquivos do paciente-->
+        <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir</a></li><!-- Link para excluir -->
+    </ul>
+</nav>
+{% empty %}
+    <li>Nenhum paciente cadastrado.</li>
+{% endfor %}
+

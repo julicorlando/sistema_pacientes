@@ -1,0 +1,21 @@
+<!-- templates/pacientes/upload_arquivo.html -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<h2>Upload de Arquivo para {{ paciente.nome }}</h2>
+
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+    </ul>
+</nav>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+
+</form>
+<a href="{% url 'detalhes_paciente' paciente.id %}">Voltar</a>

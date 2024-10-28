@@ -1,0 +1,140 @@
+/* styles.css */
+
+/* Estilização global */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+}
+
+/* Estilização para listas */
+ul {
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding: 0;
+}
+
+li {
+    background: #8cacb4;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* styles.css */
+
+/* Estilização do menu de navegação */
+.navbar {
+    background-color: #d0a0b4; /* Azul claro */
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.btn {
+    background-color: #fff;
+}
+
+.nav-links {
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Torna a lista flexível */
+    justify-content: center; /* Centraliza os itens no menu */
+}
+
+.nav-links li {
+    margin: 0 15px; /* Espaçamento entre os itens */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff; /* Cor do texto */
+    font-weight: bold;
+    transition: color 0.3s; /* Transição suave para a cor do texto */
+}
+
+.nav-links a:hover {
+    color: #d0a0b4; /* Azul escuro ao passar o mouse */
+}
+
+/* Estilização do footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* Estilização para links */
+a {
+    text-decoration: none;
+    color: #d0a0b4; /* Azul claro */
+    font-weight: bold;
+}
+
+a:hover {
+    color: #d0a0b4; /* Azul escuro ao passar o mouse */
+}
+
+/* Formulário */
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 400px; /* Largura máxima para o formulário */
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="date"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #d0a0b4; /* Azul claro */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #d0a0b4; /* Azul escuro ao passar o mouse */
+}
+
+/* Estilização para mensagens */
+.success-message {
+    background-color: #dff0d8; /* Verde claro */
+    color: #3c763d; /* Verde escuro */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: #f2dede; /* Vermelho claro */
+    color: #a94442; /* Vermelho escuro */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px;
+    text-align: center;
+}
