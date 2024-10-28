@@ -22,8 +22,8 @@
 <ul>
     {% for arquivo in arquivos %}
         <li class="btn">
-            <a href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
-            <a href="{% url 'excluir_arquivo' arquivo.id %}">Excluir</a>
+            <a class="upna" href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
+            <a class="navbar" href="{% url 'excluir_arquivo' arquivo.id %}">Excluir</a>
         </li>
     {% endfor %}
 </ul>
@@ -33,3 +33,8 @@
     {{ form.as_p }}
     <button type="submit">Upload</button>
 </form>
+<nav>
+    <ul class="nav-links">
+        <li><a href="{% url 'listar_pacientes' %}">Voltar</a></li>
+    </ul>
+</nav>
