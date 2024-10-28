@@ -13,7 +13,7 @@ urlpatterns = [
     path('', listar_pacientes, name='listar_pacientes'),
     path('cadastrar/', cadastrar_paciente, name='cadastrar_paciente'),
     path('excluir/<int:paciente_id>/', excluir_paciente, name='excluir_paciente'),  # URL para excluir paciente
-    path('confirmar_exclusao/<int:paciente_id>/', confirmar_exclusao_paciente, name='confirmar_exclusao_paciente'),
+    path('confirmar_exclusao/<int:paciente_id>/', confirmar_exclusao_paciente, name='confirmar_exclusao_paciente'), #URL para Excluir paciente
 ]
 
 if settings.DEBUG:  # Apenas para desenvolvimento
