@@ -1,54 +1,83 @@
-/* styles.css */
-
-/* Estilização global */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+/* Logo */
+.logo {
+    display: block;
+    margin: 20px auto;
+    max-width: 20%;
+    height: auto;
 }
 
-h2 {
-    color: #333;
+/* CSS específico para a Homepage */
+.homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
     text-align: center;
+    padding: 40px;
+    background-color: #f9f9fb;
 }
 
-/* Estilização para listas */
-ul {
-    list-style-type: none; /* Remove os marcadores da lista */
-    padding: 0;
+.homepage h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-li {
-    background: #8cacb4;
-    margin: 10px 0;
-    padding: 15px;
+.homepage p {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Botões de ação na homepage */
+.homepage .actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.homepage .button-primary,
+.homepage .button-secondary,
+.homepage .button-tertiary {
+    padding: 15px 30px;
+    font-size: 18px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-/* styles.css */
-
-/* Estilização do menu de navegação */
-.navbar {
-    background-color: #d0a0b4; /* Azul claro */
-    color: #fff;
-    cursor: pointer;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.btn {
-    color: #cc94b4;
-    background-color: #fff;
+.homepage .button-primary {
+    background-color: #cc94b4; /* Cor primária */
 }
 
-.upna {
-    color: #cc94b4;
+.homepage .button-secondary {
+    background-color: #8cacb4; /* Cor secundária */
 }
+
+.homepage .button-tertiary {
+    background-color: #d0a0b4; /* Cor terciária */
+}
+
+.homepage .button-primary:hover,
+.homepage .button-secondary:hover,
+.homepage .button-tertiary:hover {
+    opacity: 0.9;
+}
+
+
+/* Estilização da vavegação classe NAV-Links*/
 
 .nav-links {
+    background-color: #d0a0b4;
     list-style-type: none; /* Remove os marcadores da lista */
     padding: 0;
+    border-radius: 5px;
     margin: 0;
     display: flex; /* Torna a lista flexível */
     justify-content: center; /* Centraliza os itens no menu */
@@ -66,82 +95,356 @@ li {
 }
 
 .nav-links a:hover {
-    color: #d0a0b4; /* Azul escuro ao passar o mouse */
+    color: #d0a0b4; /* Azul rosa ao passar o mouse */
 }
 
 /* Estilização do footer */
 footer {
-    text-align: center;
+    justify-content: center;
     padding: 15px;
-    background-color: #f4f4f4;
-    position: relative;
     bottom: 0;
-    width: 100%;
 }
 
-
-/* Estilização para links */
-a {
-    text-decoration: none;
-    color: #d0a0b4; /* Azul claro */
-    font-weight: bold;
+/* Título da Lista */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-top: 30px;
 }
 
-a:hover {
-    color: #d0a0b4; /* Azul escuro ao passar o mouse */
-}
-
-/* Formulário */
-form {
-    background: #fff;
+/* Estilo para a lista de pacientes lado a lado */
+.table {
+    display: flex;
+    flex-wrap: wrap;       /* Permite que os itens quebrem linha */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    gap: 20px;              /* Espaço entre os elementos */
     padding: 20px;
+}
+
+.table ul {
+    list-style-type: none;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 250px;           /* Largura fixa para uniformizar as caixas */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table li {
+    padding: 10px 0;
+}
+
+.table li a {
+    color: #8cacb4;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.table li a:hover {
+    color: #cc94b4;
+}
+
+/* Mensagem de lista vazia */
+.empty-message {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+}
+
+/* Estilo do Campo de Busca */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.search-input {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    padding: 8px 15px;
+    background-color: #cc94b4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #8cacb4;
+}
+
+/* Tabela de Informações */
+.info-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto;
+    border-collapse: separate;
+    font-size: 16px;
+}
+
+.info-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-table td strong {
+    color: #d0a0b4;
+}
+
+/* Lista de Arquivos */
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px auto;
+    max-width: 600px;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.file-link {
+    color: #8cacb4;
+    text-decoration: none;
+}
+
+.delete-link {
+    color: #d0a0b4;
+    text-decoration: none;
+}
+
+/* Botão de Upload */
+.btn-primary {
+    display: block;
+    width: fit-content;
+    margin: 10px auto;
+    padding: 10px 20px;
+    color: white;
+    background-color: #cc94b4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #8cacb4;
+}
+
+/* Formulário de Cadastro */
+.form-cadastro {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 400px; /* Largura máxima para o formulário */
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="tel"],
-form input[type="date"],
-form input[type="file"] {
+.form-cadastro label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-cadastro input[type="text"],
+.form-cadastro input[type="email"],
+.form-cadastro input[type="date"],
+.form-cadastro select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botões */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #8cacb4;
+}
+
+.btn-primary:hover {
+    background-color: #cc94b4;
+}
+
+.btn-secondary {
+    background-color: #d0a0b4;
+}
+
+.btn-secondary:hover {
+    background-color: #8cacb4;
+}
+
+/* Formulário de Upload */
+.form-upload {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-upload label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-upload input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botão de Enviar */
+.btn-upload {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #8cacb4;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.btn-upload:hover {
+    background-color: #cc94b4;
+}
+
+/* Link de Retorno */
+.return-nav {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Configuração Geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h2 {
+    text-align: center;
+    color: #8cacb4;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Formulário de Edição */
+.form-edit {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botões */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-save,
+.btn-cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.btn-save {
+    background-color: #8cacb4;
+    color: #fff;
+}
+
+.btn-save:hover {
+    background-color: #cc94b4;
+}
+
+.btn-cancel {
+    background-color: #d0a0b4;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-cancel:hover {
+    background-color: #cc94b4;
+}
+
+/* Estilo dos Campos do Formulário */
+.form-edit input[type="text"],
+.form-edit input[type="email"],
+.form-edit input[type="date"],
+.form-edit select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    background-color: #d0a0b4; /* Azul claro */
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-form button:hover {
-    background-color: #93355c; /* Azul escuro ao passar o mouse */
-}
-
-/* Estilização para mensagens */
-.success-message {
-    background-color: #dff0d8; /* Verde claro */
-    color: #3c763d; /* Verde escuro */
-    padding: 10px;
     border-radius: 5px;
-    margin: 20px;
-    text-align: center;
-}
-
-.error-message {
-    background-color: #f2dede; /* Vermelho claro */
-    color: #a94442; /* Vermelho escuro */
-    padding: 10px;
-    border-radius: 5px;
-    margin: 20px;
-    text-align: center;
+    box-sizing: border-box; /* Adiciona padding ao tamanho total do elemento */
 }

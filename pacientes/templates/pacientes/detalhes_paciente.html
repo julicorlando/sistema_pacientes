@@ -1,57 +1,92 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Paciente</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body class="homepage">
 
-<h2>Detalhes</h2>
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" class="logo">
+    </div>
 
-<nav class="navbar">
-    <ul class="nav-links">
-        <li><a href="{% url 'homepage' %}">Home</a></li>
-        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
-        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-    </ul>
-</nav>
+    <!-- Título da Página -->
+    <h2>Detalhes do Paciente</h2>
 
-<td><strong>Nome do Paciente:</strong> {{ paciente.nome }}</td><p></p>
-<td><strong>Sexo:</strong> {{ paciente.sexo }}</td>
-<td><strong>Data de Nasciemtno:</strong> {{ paciente.data_de_nascimento}}</td><p></p>
-<td><strong>Estado Civil:</strong> {{ paciente.estado_Civil}}</td>
-<td><strong>Escolaridade: </strong> {{ paciente.escolaridade}}</td><p></p>
-<td><strong>Trabalha no momento: </strong>{{ paciente.traballha_no_momento}}</td>
-<td><strong>Profissão: </strong>{{ paciente.profissão}}</td><p></p>
-<td><strong>Filhos: </strong>{{ paciente.filhos}}</td>
-<td><strong>Quantidade: </strong>{{ paciente.filhos_Quantidade }}</td>
-<td><strong>Religião: </strong>{{ paciente.religião}}</td><p></p>
-<td><strong>Usa medicamentos: </strong>{{ paciente.toma_Algum_Medicamento}}</td>
-<td><strong>Qual?</strong>{{ paciente.qual_Medicamento}}</td><p></p>
-<td><strong>Rede de apoio: </strong>{{ paciente.rede_de_apoio }}</td>
-<td><strong>Contato de emergência: </strong> {{ paciente.contato_de_emergência }}</td><p></p>
-<td><strong>Já fez psicoterapia antes: </strong> {{ paciente.atendimento}}</td>
-<td><strong>Tipo, duração e motivo: </strong>{{ paciente.atendimento_Tipo_Tempo_Motivo }}</td><p></p>
-<td><strong>Disponibilidade: </strong>{{ paciente.Disponibilidade }}</td>
-<td><strong>Motivo e objetivo: </strong>{{ paciente.motivo_e_objetivo}}</td><p></p>
-<h3>Informações Extras</h3><p></p>
-<td><strong>Endereço: </strong>{{ paceinte.endereco}}</td><p></p>
-<td><strong>CPF: </strong>{{ paciente.cpf}}</td>
-<td><strong>E-mail: </strong>{{paciente.email}}</td><p></p>
-<td><strong>Telefone:</strong> {{ paciente.telefone }}</td>
+    <!-- Navegação -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+            <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+        </ul>
+    </nav>
 
-<h3>Arquivos</h3>
-<ul>
-    {% for arquivo in arquivos %}
-        <li class="btn">
-            <a class="upna" href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
-            <a class="navbar" href="{% url 'excluir_arquivo' arquivo.id %}">Excluir</a>
+    <!-- Informações do Paciente -->
+    <table class="info-table">
+        <tbody>
+            <tr><td><strong>Nome:</strong> {{ paciente.nome }}</td></tr>
+            <tr><td><strong>Sexo:</strong> {{ paciente.sexo }}</td></tr>
+            <tr><td><strong>Data de Nascimento:</strong> {{ paciente.data_de_nascimento }}</td></tr>
+            <tr><td><strong>Estado Civil:</strong> {{ paciente.estado_Civil }}</td></tr>
+            <tr><td><strong>Escolaridade:</strong> {{ paciente.escolaridade }}</td></tr>
+            <tr><td><strong>Trabalha no Momento:</strong> {{ paciente.traballha_no_momento }}</td></tr>
+            <tr><td><strong>Profissão:</strong> {{ paciente.profissão }}</td></tr>
+            <tr><td><strong>Filhos:</strong> {{ paciente.filhos }} ({{ paciente.filhos_Quantidade }})</td></tr>
+            <tr><td><strong>Religião:</strong> {{ paciente.religião }}</td></tr>
+            <tr><td><strong>Usa Medicamentos:</strong> {{ paciente.toma_Algum_Medicamento }}</td></tr>
+            <tr><td><strong>Qual:</strong> {{ paciente.qual_Medicamento }}</td></tr>
+            <tr><td><strong>Rede de Apoio:</strong> {{ paciente.rede_de_apoio }}</td></tr>
+            <tr><td><strong>Contato de Emergência:</strong> {{ paciente.contato_de_emergência }}</td></tr>
+            <tr><td><strong>Psicoterapia Anterior:</strong> {{ paciente.atendimento }}</td></tr>
+            <tr><td><strong>Detalhes:</strong> {{ paciente.atendimento_Tipo_Tempo_Motivo }}</td></tr>
+            <tr><td><strong>Disponibilidade:</strong> {{ paciente.Disponibilidade }}</td></tr>
+            <tr><td><strong>Objetivo:</strong> {{ paciente.motivo_e_objetivo }}</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Informações Extras -->
+    <h3>Informações Extras</h3>
+    <table class="info-table">
+        <tbody>
+            <tr><td><strong>Endereço:</strong> {{ paciente.endereco }}</td></tr>
+            <tr><td><strong>CPF:</strong> {{ paciente.cpf }}</td></tr>
+            <tr><td><strong>Email:</strong> {{ paciente.email }}</td></tr>
+            <tr><td><strong>Telefone:</strong> {{ paciente.telefone }}</td></tr>
+            <tr><td><strong>Observações:</strong> {{ paciente.observações }}</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Arquivos -->
+    <h3>Arquivos</h3>
+    <ul class="file-list">
+        {% for arquivo in arquivos %}
+        <li class="file-item">
+            <a href="{{ arquivo.arquivo.url }}" class="file-link">{{ arquivo.arquivo.name }}</a>
+            <a href="{% url 'excluir_arquivo' arquivo.id %}" class="delete-link">Excluir</a>
         </li>
-    {% endfor %}
-</ul>
-<h4>Adicionar Arquivo</h4>
-<form method="post" enctype="multipart/form-data" action="{% url 'upload_arquivo' paciente.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-</form>
-<nav>
-    <ul class="nav-links">
-        <li><a href="{% url 'listar_pacientes' %}">Voltar</a></li>
+        {% endfor %}
     </ul>
-</nav>
+
+    <!-- Formulário de Upload -->
+    <form method="post" enctype="multipart/form-data" action="{% url 'upload_arquivo' paciente.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Adicionar Arquivo</button>
+    </form>
+
+    <!-- Navegação Inferior -->
+    <nav class="bottom-nav">
+        <ul class="nav-links">
+            <li><a href="{% url 'listar_pacientes' %}">Voltar</a></li>
+            <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir Paciente</a></li>
+            <li><a href="{% url 'editar_paciente' paciente.id %}">Editar Paciente</a></li>
+        </ul>
+    </nav>
+
+</body>
+</html>

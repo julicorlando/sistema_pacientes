@@ -2,11 +2,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
-from .views import listar_pacientes, confirmar_exclusao_paciente, cadastrar_paciente, excluir_paciente
+from .views import editar_paciente, listar_pacientes, confirmar_exclusao_paciente, cadastrar_paciente, excluir_paciente
 
 urlpatterns = [
     path('cadastrar/', views.cadastrar_paciente, name='cadastrar_paciente'),
     path('pacientes/', views.listar_pacientes, name='listar_pacientes'),
+    path('pacientes/editar/<int:paciente_id>/', editar_paciente, name='editar_paciente'),  # URL para edição
     path('paciente/<int:paciente_id>/', views.detalhes_paciente, name='detalhes_paciente'),
     path('paciente/<int:paciente_id>/upload/', views.upload_arquivo, name='upload_arquivo'),
     path('arquivo/<int:arquivo_id>/excluir/', views.excluir_arquivo, name='excluir_arquivo'),

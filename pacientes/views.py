@@ -47,3 +47,14 @@ def excluir_paciente(request, paciente_id):
 def confirmar_exclusao_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     return render(request, 'pacientes/confirmar_exclusao.html', {'paciente': paciente})
+
+def editar_paciente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)  # Busca o paciente pelo ID ou retorna erro 404
+    if request.method == 'POST':
+        form = PacienteForm(request.POST, instance=paciente)  # Atualiza o objeto com novos dados
+        if form.is_valid():
+            form.save()
+            return redirect('listar_pacientes')  # Redireciona para a lista de pacientes após a atualização
+    else:
+        form = PacienteForm(instance=paciente)  # Exibe o formulário com os dados atuais do paciente
+    return render(request, 'pacientes/editar_paciente.html', {'form': form, 'paciente': paciente})

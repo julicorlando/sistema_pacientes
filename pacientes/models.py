@@ -23,6 +23,7 @@ class Paciente(models.Model):
     rede_de_apoio = models.CharField(max_length=255)
     contato_de_emergência = models.CharField(max_length=100)
     motivo_e_objetivo = models.CharField(max_length=500)
+    observações = models.CharField(max_length=1000)
 
 
     def __str__(self):

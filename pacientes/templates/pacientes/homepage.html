@@ -1,7 +1,8 @@
 <!-- templates/pacientes/homepage.html -->
 <p></p>
+<img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
 <h1>Bem-vinda Stephany Caroline</h1>
-<p>Utilize o menu para acessar as funcionalidades do sistema de pacientes.</p>
+<p>Utilize o menu para acessar as funcionalidades</p>
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,21 +13,20 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-    <nav class="navbar">
+<body class="homepage">
+    <nav>
         <ul class="nav-links">
             <li><a href="{% url 'homepage' %}">Home</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
             <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
         </ul>
     </nav>
-    <div class="container">
+    <div class="actions">
         {% block content %}
         {% endblock %}
     </div>
 
     <footer>
-        <img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
         <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
     </footer>
 </body>
