@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
+</head>
+<body>
+    <div class="cadastro-container">
+        <h2>Cadastrar Novo Usuário</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+    <div>
+        <form class="nav-links" action="{% url 'homepage' %}" method="post">
+            {% csrf_token %}
+            <button class="btn" type="submit">Voltar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,4 +1,5 @@
 {% load static %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 <p></p>
 <img class="logo" src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
@@ -8,6 +9,11 @@
         <li><a href="{% url 'homepage' %}">Home</a></li>
         <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
         <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+        <form class="nav-links" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn" type="submit">Sair</button>
+        </form>
+        
         </ul>
     </nav>
 </body>

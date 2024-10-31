@@ -13,15 +13,20 @@
     <h2>Cadastrar Paciente</h2>
 
     <!-- Navegação -->
-<body class="homepage">
-    <nav>
-        <ul class="nav-links">
-        <li><a href="{% url 'homepage' %}">Home</a></li>
-        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
-        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-        </ul>
-    </nav>
-</body>
+    <body class="homepage">
+        <nav>
+            <ul class="nav-links">
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+            <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+            <form class="nav-links" action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn" type="submit">Sair</button>
+            </form>
+            
+            </ul>
+        </nav>
+    </body>
     <!-- Formulário de Cadastro -->
     <form method="post" class="form-cadastro">
         {% csrf_token %}
