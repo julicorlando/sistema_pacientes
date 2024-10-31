@@ -28,31 +28,40 @@ def listar_pacientes(request):
 
 @login_required
 def detalhes_paciente(request, pk):
-    paciente = get_object_or_404(Paciente, pk=pk)
+    paciente = get_object_or_404(Paciente, pk=pk)  # Obtém o paciente ou retorna 404
     if paciente.usuario != request.user:  # Verifica se o paciente pertence ao usuário logado
-        return render(request, '403.html')  # Retorna uma página de erro 403 se não for permitido
+        return render(request, '403.html')  # Retorna uma página de acesso negado
 
-    return render(request, 'detalhes_paciente.html', {'paciente': paciente})
+    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
 
 @login_required
-def upload_arquivo(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id=paciente_id)
-    form = ArquivoForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        arquivo = form.save(commit=False)
-        arquivo.paciente = paciente
-        arquivo.save()
-        return redirect('detalhes_paciente', paciente_id=paciente_id)
+def upload_arquivo(request, pk):
+    paciente = get_object_or_404(Paciente, pk=pk)
+    
+    if request.method == "POST":
+        form = ArquivoForm(request.POST, request.FILES)
+        if form.is_valid():
+            arquivo = form.save(commit=False)
+            arquivo.paciente = paciente
+            arquivo.save()
+            return redirect('detalhes_paciente', pk=paciente.pk)
+        else:
+            print(form.errors)  # Exibe os erros, se houver
+    else:
+        form = ArquivoForm()
+
     return render(request, 'pacientes/upload_arquivo.html', {'form': form, 'paciente': paciente})
 
 @login_required
-def excluir_arquivo(request, arquivo_id):
-    arquivo = get_object_or_404(Arquivo, id=arquivo_id)
-    paciente_id = arquivo.paciente.id
-    arquivo.delete()
-    return redirect('detalhes_paciente', paciente_id=paciente_id)
+def excluir_arquivo(request, pk, arquivo_pk):
+    paciente = get_object_or_404(Paciente, pk=pk)
+    arquivo = get_object_or_404(Arquivo, pk=arquivo_pk, paciente=paciente)
+    
+    if request.method == "POST":
+        arquivo.delete()
+        return redirect('detalhes_paciente', pk=paciente.pk)  # Redireciona para a página do paciente
 
-from django.shortcuts import render
+    return redirect('detalhes_paciente', pk=paciente.pk)
 
 def homepage(request):
     return render(request, 'pacientes/homepage.html')

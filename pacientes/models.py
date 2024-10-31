@@ -33,7 +33,7 @@ class Paciente(models.Model):
 
 class Arquivo(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='arquivos')
-    arquivo = models.FileField(upload_to='pacientes/pdfs/')
+    arquivo = models.FileField(upload_to='arquivos/')
     data_upload = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

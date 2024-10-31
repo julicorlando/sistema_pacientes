@@ -11,8 +11,8 @@ class PacienteForm(forms.ModelForm):
 class ArquivoForm(forms.ModelForm):
     class Meta:
         model = Arquivo
-        fields = ['arquivo']
-
+        fields = ['arquivo']  # Certifique-se de que o campo 'arquivo' é um FileField no modelo
+        
 class NovoUsuarioForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

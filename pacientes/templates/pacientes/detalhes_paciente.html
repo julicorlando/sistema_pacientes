@@ -31,7 +31,7 @@
         
         </ul>
     </nav>
-</body>>
+</body>
 
     <!-- Informações do Paciente -->
     <table class="info-table">
@@ -71,11 +71,16 @@
     <!-- Arquivos -->
     <h3>Arquivos</h3>
     <ul class="file-list">
-        {% for arquivo in arquivos %}
-        <li class="file-item">
-            <a href="{{ arquivo.arquivo.url }}" class="file-link">{{ arquivo.arquivo.name }}</a>
-            <a href="{% url 'excluir_arquivo' arquivo.id %}" class="delete-link">Excluir</a>
-        </li>
+        {% for arquivo in paciente.arquivos.all %}
+            <li>
+                <a href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
+                <form action="{% url 'excluir_arquivo' paciente.pk arquivo.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?');">Excluir</button>
+                </form>
+            </li>
+        {% empty %}
+            <p>Nenhum arquivo disponível.</p>
         {% endfor %}
     </ul>
 
