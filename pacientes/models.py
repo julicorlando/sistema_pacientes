@@ -27,9 +27,20 @@ class Paciente(models.Model):
     motivo_e_objetivo = models.CharField(max_length=500)
     observações = models.CharField(max_length=1000)
 
+class Pagamento(models.Model):
+    paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE)
+    data_pagamento = models.DateField(auto_now_add=True)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)  
+    forma_pagamento = models.CharField(max_length=17, choices=[
+        ('Pix', 'Pix'),
+        ('Dinheiro', 'Dinheiro'),
+        ('Cartão de Crédito', 'Cartão de Crédito'),  # Exemplo de um valor longo
+        ('Cartão de Débito', 'Cartão de Débito'),
+        # Outros valores de escolha
+    ])
 
     def __str__(self):
-        return self.nome
+        return f'{self.paciente.nome} - {self.valor} - {self.data_pagamento}'
 
 class Arquivo(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='arquivos')

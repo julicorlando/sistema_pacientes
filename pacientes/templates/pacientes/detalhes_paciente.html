@@ -4,92 +4,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Paciente</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Detalhes do Paciente - {{ paciente.nome }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detalhes.css' %}">
+    <!-- Adicionando jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="homepage">
-
-    <!-- Logo -->
-    <div class="logo-container">
-        <img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" class="logo">
-    </div>
 
     <!-- Título da Página -->
     <h2>Detalhes do Paciente</h2>
 
     <!-- Navegação -->
-<body class="homepage">
     <nav>
         <ul class="nav-links">
-        <li><a href="{% url 'homepage' %}">Home</a></li>
-        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
-        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-        <form class="nav-links" action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="btn" type="submit">Sair</button>
-        </form>
-        
-        </ul>
-    </nav>
-</body>
-
-    <!-- Informações do Paciente -->
-    <table class="info-table">
-        <tbody>
-            <tr><td><strong>Nome:</strong> {{ paciente.nome }}</td></tr>
-            <tr><td><strong>Sexo:</strong> {{ paciente.sexo }}</td></tr>
-            <tr><td><strong>Data de Nascimento:</strong> {{ paciente.data_de_nascimento }}</td></tr>
-            <tr><td><strong>Estado Civil:</strong> {{ paciente.estado_Civil }}</td></tr>
-            <tr><td><strong>Escolaridade:</strong> {{ paciente.escolaridade }}</td></tr>
-            <tr><td><strong>Trabalha no Momento:</strong> {{ paciente.traballha_no_momento }}</td></tr>
-            <tr><td><strong>Profissão:</strong> {{ paciente.profissão }}</td></tr>
-            <tr><td><strong>Filhos:</strong> {{ paciente.filhos }} ({{ paciente.filhos_Quantidade }})</td></tr>
-            <tr><td><strong>Religião:</strong> {{ paciente.religião }}</td></tr>
-            <tr><td><strong>Usa Medicamentos:</strong> {{ paciente.toma_Algum_Medicamento }}</td></tr>
-            <tr><td><strong>Qual:</strong> {{ paciente.qual_Medicamento }}</td></tr>
-            <tr><td><strong>Rede de Apoio:</strong> {{ paciente.rede_de_apoio }}</td></tr>
-            <tr><td><strong>Contato de Emergência:</strong> {{ paciente.contato_de_emergência }}</td></tr>
-            <tr><td><strong>Psicoterapia Anterior:</strong> {{ paciente.atendimento }}</td></tr>
-            <tr><td><strong>Detalhes:</strong> {{ paciente.atendimento_Tipo_Tempo_Motivo }}</td></tr>
-            <tr><td><strong>Disponibilidade:</strong> {{ paciente.Disponibilidade }}</td></tr>
-            <tr><td><strong>Objetivo:</strong> {{ paciente.motivo_e_objetivo }}</td></tr>
-        </tbody>
-    </table>
-
-    <!-- Informações Extras -->
-    <h3>Informações Extras</h3>
-    <table class="info-table">
-        <tbody>
-            <tr><td><strong>Endereço:</strong> {{ paciente.endereco }}</td></tr>
-            <tr><td><strong>CPF:</strong> {{ paciente.cpf }}</td></tr>
-            <tr><td><strong>Email:</strong> {{ paciente.email }}</td></tr>
-            <tr><td><strong>Telefone:</strong> {{ paciente.telefone }}</td></tr>
-            <tr><td><strong>Observações:</strong> {{ paciente.observações }}</td></tr>
-        </tbody>
-    </table>
-
-    <!-- Arquivos -->
-    <h3>Arquivos</h3>
-    <ul class="file-list">
-        {% for arquivo in paciente.arquivos.all %}
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+            <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
             <li>
-                <a href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
-                <form action="{% url 'excluir_arquivo' paciente.pk arquivo.pk %}" method="post" style="display:inline;">
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?');">Excluir</button>
+                    <button class="btn" type="submit">Sair</button>
                 </form>
             </li>
-        {% empty %}
-            <p>Nenhum arquivo disponível.</p>
-        {% endfor %}
-    </ul>
+        </ul>
+    </nav>
 
-    <!-- Formulário de Upload -->
-    <form method="post" enctype="multipart/form-data" action="{% url 'upload_arquivo' paciente.id %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn-primary">Adicionar Arquivo</button>
-    </form>
+    <!-- Informações do Paciente -->
+    <section class="patient-info">
+        <h3>Informações Básicas</h3>
+        <table class="info-table">
+            <tbody>
+                <tr><td><strong>Nome:</strong> {{ paciente.nome }}</td></tr>
+                <tr><td><strong>Sexo:</strong> {{ paciente.sexo }}</td></tr>
+                <tr><td><strong>Data de Nascimento:</strong> {{ paciente.data_de_nascimento }}</td></tr>
+                <tr><td><strong>Estado Civil:</strong> {{ paciente.estado_civil }}</td></tr>
+                <tr><td><strong>Escolaridade:</strong> {{ paciente.escolaridade }}</td></tr>
+                <tr><td><strong>Trabalha no Momento:</strong> {{ paciente.trabalha_no_momento }}</td></tr>
+                <tr><td><strong>Profissão:</strong> {{ paciente.profissao }}</td></tr>
+                <tr><td><strong>Filhos:</strong> {{ paciente.filhos }} ({{ paciente.filhos_quantidade }})</td></tr>
+                <tr><td><strong>Religião:</strong> {{ paciente.religiao }}</td></tr>
+                <tr><td><strong>Usa Medicamentos:</strong> {{ paciente.toma_algum_medicamento }}</td></tr>
+                <tr><td><strong>Qual:</strong> {{ paciente.qual_medicamento }}</td></tr>
+                <tr><td><strong>Rede de Apoio:</strong> {{ paciente.rede_de_apoio }}</td></tr>
+                <tr><td><strong>Contato de Emergência:</strong> {{ paciente.contato_de_emergencia }}</td></tr>
+                <tr><td><strong>Psicoterapia Anterior:</strong> {{ paciente.atendimento }}</td></tr>
+                <tr><td><strong>Detalhes:</strong> {{ paciente.atendimento_tipo_tempo_motivo }}</td></tr>
+                <tr><td><strong>Disponibilidade:</strong> {{ paciente.disponibilidade }}</td></tr>
+                <tr><td><strong>Objetivo:</strong> {{ paciente.motivo_e_objetivo }}</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Informações Extras -->
+        <h3>Informações Extras</h3>
+        <table class="info-table">
+            <tbody>
+                <tr><td><strong>Endereço:</strong> {{ paciente.endereco }}</td></tr>
+                <tr><td><strong>CPF:</strong> {{ paciente.cpf }}</td></tr>
+                <tr><td><strong>Email:</strong> {{ paciente.email }}</td></tr>
+                <tr><td><strong>Telefone:</strong> {{ paciente.telefone }}</td></tr>
+                <tr><td><strong>Observações:</strong> {{ paciente.observacoes }}</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Informações de Pagamento -->
+    <section class="payment-info">
+        <h3>Informações de Pagamento</h3>
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>Data de Pagamento</th>
+                    <th>Valor</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                        <td>R$ {{ pagamento.valor }}</td>
+                        <td>{{ pagamento.forma_pagamento }}</td>
+                        <td>
+                            <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir</button>
+                            </form>                                
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum pagamento registrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Formulário para Adicionar Pagamento -->
+        <div class="add-payment">
+            <h4>Adicionar Novo Pagamento</h4>
+            <form method="post" action="{% url 'adicionar_pagamento' paciente.id %}">
+                {% csrf_token %}
+                <label for="valor">Valor:</label>
+                <input type="number" name="valor" required step="0.01" placeholder="R$ 0,00">
+                
+                <label for="forma_pagamento">Forma de Pagamento:</label>
+                <input type="text" name="forma_pagamento" required placeholder="Ex: Cartão, Dinheiro, etc.">
+                
+                <button type="submit" class="btn-primary">Adicionar Pagamento</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Arquivos -->
+    <section class="files-section">
+        <h3>Arquivos</h3>
+        <table class="info-table">
+            <tbody>
+                {% for arquivo in paciente.arquivos.all %}
+                    <tr>
+                        <td>
+                            <a href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
+                            <form action="{% url 'excluir_arquivo' paciente.pk arquivo.pk %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?');">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td>Nenhum arquivo disponível.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Formulário de Upload -->
+        <form method="post" enctype="multipart/form-data" action="{% url 'upload_arquivo' paciente.id %}">
+            {% csrf_token %}
+            {{ form_upload.as_p }}
+            <button type="submit" class="btn-primary">Adicionar Arquivo</button>
+        </form>
+    </section>
 
     <!-- Navegação Inferior -->
     <nav class="bottom-nav">
@@ -99,6 +152,28 @@
             <li><a href="{% url 'editar_paciente' paciente.id %}">Editar Paciente</a></li>
         </ul>
     </nav>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
+    </footer>
+
+    <!-- Script jQuery -->
+    <script>
+        $(document).ready(function() {
+            // Exemplo de animação ao carregar a página
+            $('h2').hide().fadeIn(1000);
+
+            // Exemplo de como manipular o clique no botão Excluir
+            $('.btn').on('click', function(event) {
+                // Exibe um alerta de confirmação
+                var confirmDelete = confirm('Tem certeza que deseja excluir?');
+                if (!confirmDelete) {
+                    event.preventDefault(); // Cancela o envio do formulário se o usuário cancelar
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

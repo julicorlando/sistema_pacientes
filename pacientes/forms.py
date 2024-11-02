@@ -1,5 +1,6 @@
 from django import forms
-from .models import Paciente, Arquivo
+from django.shortcuts import redirect
+from .models import Paciente, Arquivo, Pagamento
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -26,3 +27,21 @@ class NovoUsuarioForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class PagamentoForm(forms.ModelForm):
+    class Meta:
+        model = Pagamento
+        fields = ['valor', 'forma_pagamento']  # Certifique-se de incluir todos os campos necessários
+
+def adicionar_pagamento(request, paciente_id):
+    if request.method == 'POST':
+        form = PagamentoForm(request.POST)
+        if form.is_valid():
+            # Cria o pagamento usando os dados do formulário
+            pagamento = form.save(commit=False)
+            pagamento.paciente_id = paciente_id  # Associar ao paciente
+            pagamento.save()  # Salvar no banco de dados
+            return redirect('detalhes_paciente', pk=paciente_id)
+
+    # Caso o método não seja POST ou o formulário não seja válido
+    return redirect('detalhes_paciente', pk=paciente_id)

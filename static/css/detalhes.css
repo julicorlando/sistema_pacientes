@@ -1,0 +1,99 @@
+/* Reset básico para margens e preenchimentos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Cor de fundo neutra */
+    color: #333; /* Texto padrão */
+}
+
+/* Título da Página */
+h2 {
+    color: #8cacb4; /* Cor do título */
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Navegação */
+nav {
+    background-color: #d0a0b4; /* Cor de fundo do nav */
+    padding: 10px 0;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white; /* Cor do texto dos links */
+    font-weight: bold;
+}
+
+/* Estilo das tabelas */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.info-table th, .info-table td {
+    border: 1px solid #cc94b4; /* Cor das bordas */
+    padding: 10px;
+    text-align: left;
+}
+
+.info-table th {
+    background-color: #cc94b4; /* Cor de fundo do cabeçalho da tabela */
+    color: white; /* Cor do texto do cabeçalho */
+}
+
+/* Estilo dos botões */
+.btn {
+    background-color: #8cacb4; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #d0a0b4; /* Cor ao passar o mouse */
+}
+
+.btn-primary {
+    background-color: #cc94b4; /* Cor de fundo dos botões primários */
+}
+
+/* Seção de informações do paciente */
+.patient-info, .payment-info, .files-section {
+    background-color: white; /* Fundo branco para as seções */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px; /* Espaçamento entre seções */
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #d0a0b4; /* Cor do fundo do rodapé */
+    color: white; /* Cor do texto do rodapé */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

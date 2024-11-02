@@ -6,41 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Paciente</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
     <!-- Título da Página -->
-    <h2>Cadastrar Paciente</h2>
-
-    <!-- Navegação -->
-    <body class="homepage">
+        <h1>Cadastrar Paciente</h1>
+        <!-- Navegação -->
         <nav>
             <ul class="nav-links">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
-            <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-            <form class="nav-links" action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button class="btn" type="submit">Sair</button>
-            </form>
-            
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+                <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn" type="submit">Sair</button>
+                    </form>
+                </li>
             </ul>
         </nav>
-    </body>
+
     <!-- Formulário de Cadastro -->
-    <form method="post" class="form-cadastro">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="form-buttons">
-            <button type="submit" class="btn-primary">Salvar</button>
-            <button type="reset" class="btn-secondary">Limpar</button>
-        </div>
-    </form>
+    <main>
+        <form method="post" class="form-cadastro">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Salvar</button>
+                <button type="reset" class="btn-secondary">Limpar</button>
+            </div>
+        </form>
+    </main>
 
     <!-- Rodapé -->
     <footer>
         <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
     </footer>
+
+    <!-- JQuery Script para funcionalidades adicionais -->
+    <script>
+        $(document).ready(function() {
+            // Exemplo de manipulação de formulário com JQuery
+            $('.form-cadastro').on('submit', function(e) {
+                // Aqui você pode adicionar validações antes do envio
+                let nome = $('#id_nome').val(); // Supondo que você tenha um campo com id "id_nome"
+                if (nome === "") {
+                    e.preventDefault(); // Impede o envio do formulário
+                    alert('Por favor, preencha o campo Nome.'); // Mensagem de alerta
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

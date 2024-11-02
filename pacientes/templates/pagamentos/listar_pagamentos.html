@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pagamentos - {{ paciente.nome }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pagamentos.css' %}">
+</head>
+<body class="homepage">
+
+    <!-- Título da Página -->
+    <header>
+        <h1>Pagamentos de {{ paciente.nome }}</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+                <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn" type="submit">Sair</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Tabela de Pagamentos -->
+    <main>
+        <h2>Lista de Pagamentos</h2>
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>Data de Pagamento</th>
+                    <th>Valor</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                        <td>R$ {{ pagamento.valor }}</td>
+                        <td>{{ pagamento.forma_pagamento }}</td>
+                        <td>
+                            <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum pagamento registrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botão para Adicionar Pagamento -->
+        <div class="add-payment">
+            <h3>Adicionar Novo Pagamento</h3>
+            <form method="post" action="{% url 'adicionar_pagamento' paciente.id %}">
+                {% csrf_token %}
+                <label for="valor">Valor:</label>
+                <input type="number" name="valor" required step="0.01" placeholder="R$ 0,00">
+                
+                <label for="forma_pagamento">Forma de Pagamento:</label>
+                <input type="text" name="forma_pagamento" required placeholder="Ex: Cartão, Dinheiro, etc.">
+                
+                <button type="submit" class="btn-primary">Adicionar Pagamento</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
+    </footer>
+
+</body>
+</html>

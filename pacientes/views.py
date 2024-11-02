@@ -1,6 +1,8 @@
+import datetime
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente, Arquivo
-from .forms import PacienteForm, ArquivoForm, NovoUsuarioForm
+from .models import Paciente, Arquivo, Pagamento
+from .forms import PacienteForm, ArquivoForm, NovoUsuarioForm, PagamentoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 
@@ -19,20 +21,25 @@ def cadastrar_paciente(request):
 
 @login_required
 def listar_pacientes(request):
-    if request.user.is_authenticated:
-        pacientes = Paciente.objects.filter(usuario=request.user)  # Filtra pacientes do usuário logado
+    query = request.GET.get('search', '')
+    if query:
+        pacientes = Paciente.objects.filter(nome__icontains=query)
     else:
-        pacientes = Paciente.objects.none()  # Se não estiver logado, não retorna nada
+        pacientes = Paciente.objects.all()
 
     return render(request, 'pacientes/listar_pacientes.html', {'pacientes': pacientes})
 
 @login_required
 def detalhes_paciente(request, pk):
-    paciente = get_object_or_404(Paciente, pk=pk)  # Obtém o paciente ou retorna 404
-    if paciente.usuario != request.user:  # Verifica se o paciente pertence ao usuário logado
-        return render(request, '403.html')  # Retorna uma página de acesso negado
+    paciente = get_object_or_404(Paciente, pk=pk)
+    pagamentos = Pagamento.objects.filter(paciente=paciente)  # Filtra os pagamentos do paciente
 
-    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
+    context = {
+        'paciente': paciente,
+        'pagamentos': pagamentos,
+        # Se você tiver algum formulário para adicionar pagamento, adicione aqui
+    }
+    return render(request, 'pacientes/detalhes_paciente.html', context)
 
 @login_required
 def upload_arquivo(request, pk):
@@ -99,3 +106,53 @@ def cadastro(request):
     else:
         form = NovoUsuarioForm()
     return render(request, "cadastro.html", {"form": form})
+
+@login_required
+def adicionar_pagamento(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    
+    if request.method == 'POST':
+        valor = request.POST.get('valor')
+        forma_pagamento = request.POST.get('forma_pagamento')
+        
+        # Lógica para adicionar pagamento ao paciente
+        pagamento = Pagamento.objects.create(
+            paciente=paciente,
+            valor=valor,
+            forma_pagamento=forma_pagamento,
+            data_pagamento=datetime.now(),  # Certifique-se de importar datetime
+        )
+        
+        return redirect('detalhes_paciente', pk=paciente.id)  # Redireciona para os detalhes do paciente
+
+    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
+
+
+@login_required
+def registrar_pagamento(request, paciente_id):
+    # Obtém o paciente ou retorna 404 se não encontrado
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    
+    if request.method == 'POST':
+        form = PagamentoForm(request.POST)
+        if form.is_valid():
+            pagamento = form.save(commit=False)
+            pagamento.paciente = paciente  # Atribui o paciente ao pagamento
+            pagamento.save()  # Salva o pagamento no banco de dados
+            return redirect('detalhes_paciente', paciente_id=paciente.id)  # Redireciona para os detalhes do paciente
+    else:
+        form = PagamentoForm()  # Cria um novo formulário vazio
+    
+    # Renderiza a página com o formulário e o paciente
+    return render(request, 'pagamentos/registrar_pagamento', {
+        'form': form,
+        'paciente': paciente
+    })
+
+@login_required
+def excluir_pagamento(request, paciente_id, pagamento_id):
+    if request.method == 'POST':
+        pagamento = get_object_or_404(Pagamento, id=pagamento_id)
+        pagamento.delete()
+        return redirect('detalhes_paciente', pk=paciente_id)  # Aqui deve ser 'pk' se você usar 'pk' na URL
+    return redirect('detalhes_paciente', pk=paciente_id)

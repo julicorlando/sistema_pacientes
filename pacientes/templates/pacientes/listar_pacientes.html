@@ -1,34 +1,39 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <!-- Adicionando jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+        <!-- Navegação -->
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
+                <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button class="btn" type="submit">Sair</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    <!-- Campo de busca -->
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Buscar paciente..." class="search-input">
+    </div>
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-<p></p>
-<img class="logo" src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
-<body class="homepage">
-    <nav>
-        <ul class="nav-links">
-        <li><a href="{% url 'homepage' %}">Home</a></li>
-        <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
-        <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-        <form class="nav-links" action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="btn" type="submit">Sair</button>
-        </form>
-        
-        </ul>
-    </nav>
-</body>
-<h2>Lista de Pacientes</h2>
-
-<div class="search-container">
-    <form method="GET" action="{% url 'listar_pacientes' %}">
-        <input type="text" name="search" placeholder="Buscar paciente..." class="search-input">
-        <button type="submit" class="search-button">Buscar</button>
-    </form>
-</div>
-<div class="table">
+    <div class="table">
         {% for paciente in pacientes %}
-            <ul>
-                <li>{{ paciente.nome }}</li>
+            <ul class="paciente-item">
+                <li class="paciente-nome">{{ paciente.nome }}</li>
                 <li><a href="{% url 'detalhes_paciente' paciente.id %}">Ver detalhes</a></li>
                 <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir</a></li>
                 <li><a href="{% url 'editar_paciente' paciente.id %}">Editar</a></li>
@@ -36,7 +41,22 @@
         {% empty %}
             <p class="empty-message">Nenhum paciente cadastrado.</p>
         {% endfor %}
-</div>
-<footer>
-    <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
-</footer>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Todos os direitos Reservados Stephany Caroline</p>
+    </footer>
+
+    <!-- Script jQuery para busca dinâmica -->
+    <script>
+        $(document).ready(function() {
+            $('#search').on('keyup', function() {
+                var value = $(this).val().toLowerCase(); // Pega o valor do input e converte para minúsculas
+                $('.paciente-item').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1) // Verifica se o texto do item contém o valor buscado
+                });
+            });
+        });
+    </script>
+</body>
+</html>
