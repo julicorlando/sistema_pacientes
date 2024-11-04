@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Paciente(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # Vincula ao usuário
@@ -49,3 +50,8 @@ class Arquivo(models.Model):
 
     def __str__(self):
         return f"Arquivo de {self.paciente.nome}"
+
+class Evolucao(models.Model):
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    conteudo = models.TextField()
+    data = models.DateTimeField(default=timezone.now)

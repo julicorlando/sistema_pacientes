@@ -1,10 +1,15 @@
 import datetime
 from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
+
+import pacientes
 from .models import Paciente, Arquivo, Pagamento
-from .forms import PacienteForm, ArquivoForm, NovoUsuarioForm, PagamentoForm
+from .forms import EvolucaoForm, PacienteForm, ArquivoForm, NovoUsuarioForm, PagamentoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from .models import Evolucao, Paciente
+from django.utils import timezone
+
 
 @login_required
 def cadastrar_paciente(request):
@@ -156,3 +161,40 @@ def excluir_pagamento(request, paciente_id, pagamento_id):
         pagamento.delete()
         return redirect('detalhes_paciente', pk=paciente_id)  # Aqui deve ser 'pk' se você usar 'pk' na URL
     return redirect('detalhes_paciente', pk=paciente_id)
+
+@login_required
+def evolucoes(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    evolucoes = Evolucao.objects.filter(paciente=paciente).order_by('-data')
+    return render(request, 'pacientes/evolucoes.html', {'paciente': paciente, 'evolucoes': evolucoes})
+
+@login_required
+def adicionar_evolucao(request, paciente_id):
+    if request.method == 'POST':
+        conteudo = request.POST['conteudo']
+        paciente = get_object_or_404(Paciente, id=paciente_id)
+        Evolucao.objects.create(paciente=paciente, conteudo=conteudo, data=timezone.now())
+        return redirect('evolucoes', paciente_id=paciente.id)
+
+@login_required
+def editar_evolucao(request, evolucao_id):
+    # Obtenha a evolução específica usando o ID
+    evolucao = get_object_or_404(Evolucao, id=evolucao_id)
+    
+    if request.method == "POST":
+        # Processa o formulário de edição e salva as alterações
+        form = EvolucaoForm(request.POST, instance=evolucao)
+        if form.is_valid():
+            form.save()
+            return redirect('evolucoes', paciente_id=evolucao.paciente.id)
+    else:
+        form = EvolucaoForm(instance=evolucao)
+    
+    return render(request, 'pacientes/editar_evolucao.html', {'form': form, 'paciente': evolucao.paciente})
+
+@login_required
+def excluir_evolucao(request, evolucao_id):
+    evolucao = get_object_or_404(Evolucao, id=evolucao_id)
+    paciente_id = evolucao.paciente.id
+    evolucao.delete()
+    return redirect('evolucoes', paciente_id=paciente_id)

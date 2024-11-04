@@ -1,7 +1,7 @@
 <!-- templates/pacientes/homepage.html -->
 <p></p>
 <img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
-<h1>Bem-vinda Stephany Caroline</h1>
+<h1><strong>Bem-vindo(a) </strong> {{ user.username }}</h1>
 <p>Utilize o menu para acessar as funcionalidades</p>
 <!-- templates/base.html -->
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seu Sistema de Pacientes</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/detalhes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body class="homepage">
     <nav>
@@ -19,10 +19,6 @@
             <li><a href="{% url 'homepage' %}">Pagina Inicial</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Acessar Sistema</a></li>
             <!--<li><a href="https://wa.me/5581989328045">Cadastrar-se</a></li>-->
-            <form class="nav-links" action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button class="btn" type="submit">Sair</button>
-            </form>
     </nav>
     <div class="actions">
         {% block content %}

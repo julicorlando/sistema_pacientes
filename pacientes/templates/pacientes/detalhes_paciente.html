@@ -99,21 +99,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <!-- Formulário para Adicionar Pagamento -->
-        <div class="add-payment">
-            <h4>Adicionar Novo Pagamento</h4>
-            <form method="post" action="{% url 'adicionar_pagamento' paciente.id %}">
-                {% csrf_token %}
-                <label for="valor">Valor:</label>
-                <input type="number" name="valor" required step="0.01" placeholder="R$ 0,00">
-                
-                <label for="forma_pagamento">Forma de Pagamento:</label>
-                <input type="text" name="forma_pagamento" required placeholder="Ex: Cartão, Dinheiro, etc.">
-                
-                <button type="submit" class="btn-primary">Adicionar Pagamento</button>
-            </form>
-        </div>
     </section>
 
     <!-- Arquivos -->
@@ -136,13 +121,19 @@
                 {% endfor %}
             </tbody>
         </table>
-        <!-- Formulário de Upload -->
-        <form method="post" enctype="multipart/form-data" action="{% url 'upload_arquivo' paciente.id %}">
-            {% csrf_token %}
-            {{ form_upload.as_p }}
-            <button type="submit" class="btn-primary">Adicionar Arquivo</button>
-        </form>
     </section>
+
+    <!-- Evoluções -->
+    <section class="evolucao-container">
+        <h2>Evoluções do Paciente</h2>
+        <div class="nova-evolucao">
+            <h3>Adicionar Nova Evolução</h3>
+            <form action="{% url 'adicionar_evolucao' paciente.id %}" method="post">
+                {% csrf_token %}
+                <textarea name="conteudo" placeholder="Escreva a evolução do paciente aqui..." required></textarea>
+                <button type="submit" class="btn">Salvar Evolução</button>
+            </form>
+        </div>
 
     <!-- Navegação Inferior -->
     <nav class="bottom-nav">
@@ -161,17 +152,8 @@
     <!-- Script jQuery -->
     <script>
         $(document).ready(function() {
-            // Exemplo de animação ao carregar a página
+            // Animação para o título da página
             $('h2').hide().fadeIn(1000);
-
-            // Exemplo de como manipular o clique no botão Excluir
-            $('.btn').on('click', function(event) {
-                // Exibe um alerta de confirmação
-                var confirmDelete = confirm('Tem certeza que deseja excluir?');
-                if (!confirmDelete) {
-                    event.preventDefault(); // Cancela o envio do formulário se o usuário cancelar
-                }
-            });
         });
     </script>
 

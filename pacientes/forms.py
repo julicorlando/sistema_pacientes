@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import redirect
-from .models import Paciente, Arquivo, Pagamento
+from .models import Evolucao, Paciente, Arquivo, Pagamento
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -45,3 +45,8 @@ def adicionar_pagamento(request, paciente_id):
 
     # Caso o método não seja POST ou o formulário não seja válido
     return redirect('detalhes_paciente', pk=paciente_id)
+
+class EvolucaoForm(forms.ModelForm):
+    class Meta:
+        model = Evolucao
+        fields = ['conteudo']  # Campos que deseja permitir a edição
