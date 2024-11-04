@@ -18,7 +18,7 @@
         <ul class="nav-links">
             <li><a href="{% url 'homepage' %}">Pagina Inicial</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Acessar Sistema</a></li>
-            <li><a href="https://wa.me/5581989328045">Cadastrar-se</a></li>
+            <!--<li><a href="https://wa.me/5581989328045">Cadastrar-se</a></li>-->
             <form class="nav-links" action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
                 <button class="btn" type="submit">Sair</button>
