@@ -70,35 +70,17 @@
     <!-- Informações de Pagamento -->
     <section class="payment-info">
         <h3>Informações de Pagamento</h3>
+        <h4>Pagamentos de {{ paciente.nome }}</h4>
         <table class="info-table">
-            <thead>
-                <tr>
-                    <th>Data de Pagamento</th>
-                    <th>Valor</th>
-                    <th>Forma de Pagamento</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
             <tbody>
-                {% for pagamento in pagamentos %}
-                    <tr>
-                        <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
-                        <td>R$ {{ pagamento.valor }}</td>
-                        <td>{{ pagamento.forma_pagamento }}</td>
-                        <td>
-                            <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
-                                {% csrf_token %}
-                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir</button>
-                            </form>                                
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4">Nenhum pagamento registrado.</td>
-                    </tr>
-                {% endfor %}
+                <tr><td>{% for pagamento in paciente.pagamentos.all %}</td></tr>
+                <tr><td>{{ pagamento.data }} - R$ {{ pagamento.valor }} - {{ pagamento.descricao }}</td></tr>
+            {% empty %}
+                <tr><td>>Sem pagamentos registrados.</td></tr>
+            {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'adicionar_pagamento' paciente.id %}" class="btn btn-primary">Adicionar Pagamento</a>
     </section>
 
     <!-- Arquivos -->
@@ -134,6 +116,7 @@
                 <button type="submit" class="btn">Salvar Evolução</button>
             </form>
         </div>
+    </section>
 
     <!-- Navegação Inferior -->
     <nav class="bottom-nav">

@@ -23,6 +23,7 @@ urlpatterns = [
     path('paciente/<int:paciente_id>/registrar_pagamento/', views.registrar_pagamento, name='registrar_pagamento'),    #URL Registrar pagamento
     path('paciente/<int:pk>/', views.detalhes_paciente, name='detalhes_paciente'),
     path('paciente/<int:paciente_id>/adicionar_pagamento/', adicionar_pagamento, name='adicionar_pagamento'),
+    path('pacientes/<int:paciente_id>/adicionar_pagamento/', views.adicionar_pagamento, name='adicionar_pagamento'),
     path('pacientes/paciente/<int:pk>/', detalhes_paciente, name='detalhes_paciente'),
     path('pacientes/paciente/<int:paciente_id>/excluir_pagamento/<int:pagamento_id>/', excluir_pagamento, name='excluir_pagamento'),
     path('paciente/<int:paciente_id>/evolucoes/', views.evolucoes, name='evolucoes'),
@@ -32,6 +33,7 @@ urlpatterns = [
     path('paciente/<int:pk>/', detalhes_paciente, name='detalhes_paciente'),
     path('pacientes/evolucao/editar/<int:evolucao_id>/', views.editar_evolucao, name='editar_evolucao'),
     path('pacientes/detalhes/<int:paciente_id>/', views.detalhes_paciente, name='detalhes_pacientes'),
+    path('pacientes/paciente/<int:paciente_id>/', views.detalhes_paciente, name='detalhes_paciente'),
 ]
 if settings.DEBUG:  # Apenas para desenvolvimento
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

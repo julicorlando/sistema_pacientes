@@ -27,9 +27,12 @@ class Paciente(models.Model):
     contato_de_emergência = models.CharField(max_length=100)
     motivo_e_objetivo = models.CharField(max_length=500)
     observações = models.CharField(max_length=1000)
-
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pacientes')
+    def __str__(self):
+        return self.nome
+    
 class Pagamento(models.Model):
-    paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='pagamentos')    
     data_pagamento = models.DateField(auto_now_add=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2)  
     forma_pagamento = models.CharField(max_length=17, choices=[

@@ -1,8 +1,6 @@
 import datetime
 from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-
-import pacientes
 from .models import Paciente, Arquivo, Pagamento
 from .forms import EvolucaoForm, PacienteForm, ArquivoForm, NovoUsuarioForm, PagamentoForm
 from django.contrib.auth.decorators import login_required
@@ -26,17 +24,12 @@ def cadastrar_paciente(request):
 
 @login_required
 def listar_pacientes(request):
-    query = request.GET.get('search', '')
-    if query:
-        pacientes = Paciente.objects.filter(nome__icontains=query)
-    else:
-        pacientes = Paciente.objects.all()
-
+    pacientes = Paciente.objects.filter(usuario=request.user)
     return render(request, 'pacientes/listar_pacientes.html', {'pacientes': pacientes})
 
 @login_required
 def detalhes_paciente(request, pk):
-    paciente = get_object_or_404(Paciente, pk=pk)
+    paciente = get_object_or_404(Paciente, id=pk)    
     pagamentos = Pagamento.objects.filter(paciente=paciente)  # Filtra os pagamentos do paciente
 
     context = {
@@ -44,7 +37,7 @@ def detalhes_paciente(request, pk):
         'pagamentos': pagamentos,
         # Se você tiver algum formulário para adicionar pagamento, adicione aqui
     }
-    return render(request, 'pacientes/detalhes_paciente.html', context)
+    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
 
 @login_required
 def upload_arquivo(request, pk):
@@ -116,21 +109,17 @@ def cadastro(request):
 def adicionar_pagamento(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     
-    if request.method == 'POST':
-        valor = request.POST.get('valor')
-        forma_pagamento = request.POST.get('forma_pagamento')
-        
-        # Lógica para adicionar pagamento ao paciente
-        pagamento = Pagamento.objects.create(
-            paciente=paciente,
-            valor=valor,
-            forma_pagamento=forma_pagamento,
-            data_pagamento=datetime.now(),  # Certifique-se de importar datetime
-        )
-        
-        return redirect('detalhes_paciente', pk=paciente.id)  # Redireciona para os detalhes do paciente
-
-    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
+    if request.method == "POST":
+        form = PagamentoForm(request.POST)
+        if form.is_valid():
+            pagamento = form.save(commit=False)
+            pagamento.paciente = paciente
+            pagamento.save()
+            return redirect('detalhes_paciente', paciente_id=paciente.id)
+    else:
+        form = PagamentoForm()
+    
+    return render(request, 'pacientes/adicionar_pagamento.html', {'form': form, 'paciente': paciente})
 
 
 @login_required

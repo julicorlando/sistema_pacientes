@@ -2,7 +2,7 @@
 <p></p>
 <img src="{{ MEDIA_URL }}media/pacientes/Logo/Logo.png" alt="Logo" style="max-width: 20%; justify-content: center; height: auto;">
 <h1><strong>Bem-vindo(a) </strong> {{ user.username }}</h1>
-<p>Utilize o menu para acessar as funcionalidades</p>
+<p>Acesse o sitema para utilizar o menu de funcionalidades funcionalidades</p>
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,6 +19,12 @@
             <li><a href="{% url 'homepage' %}">Pagina Inicial</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Acessar Sistema</a></li>
             <!--<li><a href="https://wa.me/5581989328045">Cadastrar-se</a></li>-->
+            <li>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button class="btn" type="submit">Sair</button>
+                </form>
+            </li>
     </nav>
     <div class="actions">
         {% block content %}
