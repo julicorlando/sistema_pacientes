@@ -41,38 +41,34 @@
             </thead>
             <tbody>
                 {% for pagamento in pagamentos %}
-                    <tr>
-                        <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
-                        <td>R$ {{ pagamento.valor }}</td>
-                        <td>{{ pagamento.forma_pagamento }}</td>
-                        <td>
-                            <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
-                                {% csrf_token %}
-                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4">Nenhum pagamento registrado.</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                    <td>{{ pagamento.forma_pagamento }}</td>
+                    <td>
+                        <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir Pagamento</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Nenhum pagamento encontrado.</td>
+                </tr>
+            {% endfor %}
+            
             </tbody>
         </table>
 
         <!-- Botão para Adicionar Pagamento -->
         <div class="add-payment">
             <h3>Adicionar Novo Pagamento</h3>
-            <form method="post" action="{% url 'adicionar_pagamento' paciente.id %}">
-                {% csrf_token %}
-                <label for="valor">Valor:</label>
-                <input type="number" name="valor" required step="0.01" placeholder="R$ 0,00">
-                
-                <label for="forma_pagamento">Forma de Pagamento:</label>
-                <input type="text" name="forma_pagamento" required placeholder="Ex: Cartão, Dinheiro, etc.">
-                
-                <button type="submit" class="btn-primary">Adicionar Pagamento</button>
-            </form>
+            {% if paciente.id %}
+    <a href="{% url 'adicionar_pagamento' paciente.id %}" class="btn btn-primary">Adicionar Pagamento</a>
+{% else %}
+    <p>Paciente não encontrado.</p>
+{% endif %}
+
         </div>
     </main>
 

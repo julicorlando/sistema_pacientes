@@ -38,7 +38,7 @@
                         <p class="data-evolucao"><strong>Data:</strong> {{ evolucao.data|date:"d/m/Y H:i" }}</p>
                         <p class="conteudo-evolucao">{{ evolucao.conteudo }}</p>
                         <div class="acoes-evolucao">
-                            <a href="{% url 'editar_evolucao' evolucao.id %}" class="btn edit-btn">Editar</a>
+                            <a href="{% url 'editar_evolucao' evolucao.id %}">Editar Evolução</a>
                             <a href="{% url 'excluir_evolucao' evolucao.id %}" class="btn delete-btn excluir-evolucao">Excluir</a>
                         </div>
                     </article>

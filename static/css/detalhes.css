@@ -59,6 +59,10 @@ nav {
     color: white; /* Cor do texto do cabeçalho */
 }
 
+.btt {
+    background-color: #cc94b4; /* Cor de fundo do botão */
+}
+
 /* Estilo dos botões */
 .btn {
     background-color: #8cacb4; /* Cor de fundo do botão */

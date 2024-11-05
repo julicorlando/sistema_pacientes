@@ -1,44 +1,57 @@
 import datetime
-from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente, Arquivo, Pagamento
+from .models import Paciente, Arquivo, Pagamento, Evolucao
 from .forms import EvolucaoForm, PacienteForm, ArquivoForm, NovoUsuarioForm, PagamentoForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
-from .models import Evolucao, Paciente
+from django.contrib.auth import authenticate, login
 from django.utils import timezone
+from django.contrib import messages
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('listar_pacientes')  # Redireciona para a URL nomeada
+        else:
+            # Tratar falha de login (exibir mensagem de erro)
+            return render(request, 'login.html', {'error': 'Usuário ou senha inválidos.'})
+    return render(request, 'resistration/login.html')
 
+# Homepage
+def homepage(request):
+    return render(request, 'pacientes/homepage.html')
+
+# Cadastro de novo paciente
 @login_required
 def cadastrar_paciente(request):
     if request.method == "POST":
         form = PacienteForm(request.POST)
         if form.is_valid():
-            paciente = form.save(commit=False)  # Não salva ainda
+            paciente = form.save(commit=False)
             paciente.usuario = request.user  # Atribui o usuário logado
-            paciente.save()  # Agora salva
-            return redirect('listar_pacientes')  # Certifique-se de que 'listar_pacientes' está correto
+            paciente.save()
+            return redirect('listar_pacientes')
     else:
-        form = PacienteForm()  # Inicializa o formulário vazio
+        form = PacienteForm()
     return render(request, 'pacientes/cadastrar_paciente.html', {'form': form})
 
+# Listar pacientes
 @login_required
 def listar_pacientes(request):
     pacientes = Paciente.objects.filter(usuario=request.user)
-    return render(request, 'pacientes/listar_pacientes.html', {'pacientes': pacientes})
+    return render(request, 'pacientes/listar_pacientes.html', {'pacientes' : pacientes})
 
+# Detalhes do paciente
 @login_required
 def detalhes_paciente(request, pk):
-    paciente = get_object_or_404(Paciente, id=pk)    
-    pagamentos = Pagamento.objects.filter(paciente=paciente)  # Filtra os pagamentos do paciente
+    paciente = get_object_or_404(Paciente, id=pk)
+    pagamentos = Pagamento.objects.filter(paciente=paciente)  # Obtenha todos os pagamentos
+    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente, 'pagamentos': pagamentos})
 
-    context = {
-        'paciente': paciente,
-        'pagamentos': pagamentos,
-        # Se você tiver algum formulário para adicionar pagamento, adicione aqui
-    }
-    return render(request, 'pacientes/detalhes_paciente.html', {'paciente': paciente})
-
+# Upload de arquivo
 @login_required
 def upload_arquivo(request, pk):
     paciente = get_object_or_404(Paciente, pk=pk)
@@ -50,13 +63,12 @@ def upload_arquivo(request, pk):
             arquivo.paciente = paciente
             arquivo.save()
             return redirect('detalhes_paciente', pk=paciente.pk)
-        else:
-            print(form.errors)  # Exibe os erros, se houver
     else:
         form = ArquivoForm()
-
+    
     return render(request, 'pacientes/upload_arquivo.html', {'form': form, 'paciente': paciente})
 
+# Excluir arquivo
 @login_required
 def excluir_arquivo(request, pk, arquivo_pk):
     paciente = get_object_or_404(Paciente, pk=pk)
@@ -64,47 +76,54 @@ def excluir_arquivo(request, pk, arquivo_pk):
     
     if request.method == "POST":
         arquivo.delete()
-        return redirect('detalhes_paciente', pk=paciente.pk)  # Redireciona para a página do paciente
+        messages.success(request, "Arquivo excluído com sucesso.")
+        return redirect('detalhes_paciente', pk=paciente.pk)
+    
+    return render(request, 'pacientes/excluir_arquivo.html', {'paciente': paciente, 'arquivo': arquivo})
 
-    return redirect('detalhes_paciente', pk=paciente.pk)
-
-def homepage(request):
-    return render(request, 'pacientes/homepage.html')
-
+# Excluir paciente
 @login_required
 def excluir_paciente(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id=paciente_id)  # Obtém o paciente ou retorna 404 se não existir
-    paciente.delete()  # Exclui o paciente
-    return redirect('listar_pacientes')  # Redireciona para a lista de pacientes
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    paciente.delete()
+    messages.success(request, "Paciente excluído com sucesso.")
+    return redirect('listar_pacientes')
 
+# Confirmar exclusão do paciente
 @login_required
 def confirmar_exclusao_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     return render(request, 'pacientes/confirmar_exclusao.html', {'paciente': paciente})
 
+# Editar paciente
 @login_required
 def editar_paciente(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id=paciente_id)  # Busca o paciente pelo ID ou retorna erro 404
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    
     if request.method == 'POST':
-        form = PacienteForm(request.POST, instance=paciente)  # Atualiza o objeto com novos dados
+        form = PacienteForm(request.POST, instance=paciente)
         if form.is_valid():
             form.save()
-            return redirect('listar_pacientes')  # Redireciona para a lista de pacientes após a atualização
+            messages.success(request, "Paciente atualizado com sucesso.")
+            return redirect('listar_pacientes')
     else:
-        form = PacienteForm(instance=paciente)  # Exibe o formulário com os dados atuais do paciente
+        form = PacienteForm(instance=paciente)
+    
     return render(request, 'pacientes/editar_paciente.html', {'form': form, 'paciente': paciente})
 
+# Cadastro de novo usuário
 def cadastro(request):
     if request.method == "POST":
         form = NovoUsuarioForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Faz login automaticamente após cadastro
-            return redirect("homepage")  # Redireciona para uma página inicial após cadastro
+            login(request, user)  # Faz login automaticamente
+            return redirect("homepage")
     else:
         form = NovoUsuarioForm()
     return render(request, "cadastro.html", {"form": form})
 
+# Adicionar pagamento
 @login_required
 def adicionar_pagamento(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
@@ -113,77 +132,92 @@ def adicionar_pagamento(request, paciente_id):
         form = PagamentoForm(request.POST)
         if form.is_valid():
             pagamento = form.save(commit=False)
-            pagamento.paciente = paciente
+            pagamento.paciente = paciente  # Associar ao paciente correto
             pagamento.save()
-            return redirect('detalhes_paciente', paciente_id=paciente.id)
+            messages.success(request, "Pagamento adicionado com sucesso.")
+            return redirect('detalhes_paciente', pk=paciente_id)
     else:
         form = PagamentoForm()
     
     return render(request, 'pacientes/adicionar_pagamento.html', {'form': form, 'paciente': paciente})
 
+# Listar pagamentos
+@login_required
+def listar_pagamentos(request, paciente_id):
+    pagamentos = Pagamento.objects.filter(paciente_id=paciente_id)
+    return render(request, 'pagamentos/listar_pagamentos.html', {'pagamentos': pagamentos})
 
+# Registrar pagamento
 @login_required
 def registrar_pagamento(request, paciente_id):
-    # Obtém o paciente ou retorna 404 se não encontrado
     paciente = get_object_or_404(Paciente, id=paciente_id)
     
     if request.method == 'POST':
         form = PagamentoForm(request.POST)
         if form.is_valid():
             pagamento = form.save(commit=False)
-            pagamento.paciente = paciente  # Atribui o paciente ao pagamento
-            pagamento.save()  # Salva o pagamento no banco de dados
-            return redirect('detalhes_paciente', paciente_id=paciente.id)  # Redireciona para os detalhes do paciente
+            pagamento.paciente = paciente
+            pagamento.save()
+            messages.success(request, "Pagamento registrado com sucesso.")
+            return redirect('detalhes_paciente', paciente_id=paciente.id)
     else:
-        form = PagamentoForm()  # Cria um novo formulário vazio
+        form = PagamentoForm()
     
-    # Renderiza a página com o formulário e o paciente
-    return render(request, 'pagamentos/registrar_pagamento', {
-        'form': form,
-        'paciente': paciente
-    })
+    return render(request, 'pagamentos/registrar_pagamento.html', {'form': form, 'paciente': paciente})
 
+# Excluir pagamento
 @login_required
 def excluir_pagamento(request, paciente_id, pagamento_id):
-    if request.method == 'POST':
-        pagamento = get_object_or_404(Pagamento, id=pagamento_id)
-        pagamento.delete()
-        return redirect('detalhes_paciente', pk=paciente_id)  # Aqui deve ser 'pk' se você usar 'pk' na URL
-    return redirect('detalhes_paciente', pk=paciente_id)
-
+    pagamento = get_object_or_404(Pagamento, id=pagamento_id, paciente_id=paciente_id)
+    pagamento.delete()
+    messages.success(request, "Pagamento excluído com sucesso.")
+    return redirect('registrar_pagamento', paciente_id=paciente_id)
+    
+# Listar evoluções
 @login_required
 def evolucoes(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     evolucoes = Evolucao.objects.filter(paciente=paciente).order_by('-data')
     return render(request, 'pacientes/evolucoes.html', {'paciente': paciente, 'evolucoes': evolucoes})
 
+# Adicionar evolução
 @login_required
 def adicionar_evolucao(request, paciente_id):
-    if request.method == 'POST':
-        conteudo = request.POST['conteudo']
-        paciente = get_object_or_404(Paciente, id=paciente_id)
-        Evolucao.objects.create(paciente=paciente, conteudo=conteudo, data=timezone.now())
-        return redirect('evolucoes', paciente_id=paciente.id)
-
-@login_required
-def editar_evolucao(request, evolucao_id):
-    # Obtenha a evolução específica usando o ID
-    evolucao = get_object_or_404(Evolucao, id=evolucao_id)
+    paciente = get_object_or_404(Paciente, id=paciente_id)
     
-    if request.method == "POST":
-        # Processa o formulário de edição e salva as alterações
+    if request.method == 'POST':
+        form = EvolucaoForm(request.POST)
+        if form.is_valid():
+            evolucao = form.save(commit=False)
+            evolucao.paciente = paciente
+            evolucao.data = timezone.now()  # Data da evolução
+            evolucao.save()
+            messages.success(request, "Evolução adicionada com sucesso.")
+            return redirect('evolucoes', paciente_id=paciente.id)
+    else:
+        form = EvolucaoForm()
+    
+    return render(request, 'pacientes/adicionar_evolucao.html', {'form': form, 'paciente': paciente})
+
+# Editar evolução
+@login_required
+def editar_evolucao(request, id):
+    evolucao = get_object_or_404(Evolucao, pk=id)
+    
+    if request.method == 'POST':
         form = EvolucaoForm(request.POST, instance=evolucao)
         if form.is_valid():
             form.save()
-            return redirect('evolucoes', paciente_id=evolucao.paciente.id)
+            return redirect('detalhes_paciente', pk=evolucao.paciente.id)  # Usando 'pk' aqui
     else:
         form = EvolucaoForm(instance=evolucao)
+    return render(request, 'pacientes/editar_evolucao.html', {'form': form, 'evolucao': evolucao})
     
-    return render(request, 'pacientes/editar_evolucao.html', {'form': form, 'paciente': evolucao.paciente})
-
+# Excluir evolução
 @login_required
 def excluir_evolucao(request, evolucao_id):
     evolucao = get_object_or_404(Evolucao, id=evolucao_id)
     paciente_id = evolucao.paciente.id
     evolucao.delete()
+    messages.success(request, "Evolução excluída com sucesso.")
     return redirect('evolucoes', paciente_id=paciente_id)

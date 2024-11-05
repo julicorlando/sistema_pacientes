@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <title>Detalhes do Paciente - {{ paciente.nome }}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/detalhes.css' %}">
+    
     <!-- Adicionando jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -20,12 +22,6 @@
             <li><a href="{% url 'homepage' %}">Home</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
             <li><a href="{% url 'cadastrar_paciente' %}">Cadastrar Paciente</a></li>
-            <li>
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button class="btn" type="submit">Sair</button>
-                </form>
-            </li>
         </ul>
     </nav>
 
@@ -70,17 +66,50 @@
     <!-- Informações de Pagamento -->
     <section class="payment-info">
         <h3>Informações de Pagamento</h3>
-        <h4>Pagamentos de {{ paciente.nome }}</h4>
-        <table class="info-table">
-            <tbody>
-                <tr><td>{% for pagamento in paciente.pagamentos.all %}</td></tr>
-                <tr><td>{{ pagamento.data }} - R$ {{ pagamento.valor }} - {{ pagamento.descricao }}</td></tr>
-            {% empty %}
-                <tr><td>>Sem pagamentos registrados.</td></tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'adicionar_pagamento' paciente.id %}" class="btn btn-primary">Adicionar Pagamento</a>
+        
+        <div class="pagamento-area">
+            <h2>Pagamentos de {{ paciente.nome }}</h2>            
+            <!-- Botão para adicionar um novo pagamento -->
+            {% if paciente.id %}
+            <a href="{% url 'adicionar_pagamento' paciente.id %}" class="btn btn-primary">Adicionar Pagamento</a>
+        {% else %}
+            <p>Paciente não encontrado.</p>
+        {% endif %}
+        
+            <!-- Tabela de pagamentos existentes -->
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>Data do Pagamento</th>
+                        <th>Forma de Pagamento</th>
+                        <th>Valor</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pagamento in pagamentos %}
+                        <tr>
+                            <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td> <!-- Exibe a data formatada -->
+                            <td>{{ pagamento.forma_pagamento }}</td> <!-- Exibe a forma de pagamento -->
+                            <td><strong>R$ </strong>{{ pagamento.valor }}</td> <!-- Exibe o valor do pagamento -->
+        
+                            <!-- Botão para excluir o pagamento -->
+                            <td>
+                                <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir Pagamento</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhum pagamento encontrado.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
     </section>
 
     <!-- Arquivos -->
@@ -122,8 +151,15 @@
     <nav class="bottom-nav">
         <ul class="nav-links">
             <li><a href="{% url 'listar_pacientes' %}">Voltar</a></li>
+            <li><a href="{% url 'evolucoes' paciente.id %}">Ver Evoluções</a></li>
             <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir Paciente</a></li>
             <li><a href="{% url 'editar_paciente' paciente.id %}">Editar Paciente</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button class="btt" type="submit">Sair</button>
+                </form>
+            </li>
         </ul>
     </nav>
 
