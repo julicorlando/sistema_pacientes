@@ -21,8 +21,8 @@ def login_view(request):
     return render(request, 'resistration/login.html')
 
 # Homepage
-def homepage(request):
-    return render(request, 'pacientes/homepage.html')
+def index(request):
+    return render(request, 'pacientes/index.html')
 
 # Cadastro de novo paciente
 @login_required

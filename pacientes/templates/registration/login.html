@@ -38,7 +38,7 @@
             // Redireciona o usuário ao clicar no botão Voltar
             $(".btn-back").on("click", function() {
                 if (confirm("Tem certeza de que deseja voltar sem fazer login?")) {
-                    window.location.href = "{% url 'homepage' %}";
+                    window.location.href = "{% url 'index' %}";
                 }
             });
         });

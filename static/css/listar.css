@@ -1,158 +1,206 @@
-/* Paleta de cores */
-:root {
-    --primary-color: #8cacb4;
-    --secondary-color: #8cacb4;
-    --accent-color: #cc94b4;
-    --background-color: #f9f9f9;
-    --text-color: #333;
-    --light-grey: #e0e0e0;
-}
-
-/* Reset básico */
-* {
+/* Estilos globais */
+body.homepage {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
-header h1 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-top: 20px;
-    font-size: 2rem;
-}
-
-.logo {
-    justify-content: center;
-}
-
-/* Navegação */
 nav {
-    background-color: var(--accent-color);
-    padding: 1rem;
-    text-align: center;
+    width: 100%;
+    background-color: #8cacb4; /* Fundo da paleta */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.nav-links {
-    list-style: none;
+nav ul {
+    list-style-type: none;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    padding: 0;
+    margin: 0;
 }
 
-.nav-links a {
-    color: white;
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a, nav .btn {
+    color: #ffffff;
     text-decoration: none;
-    padding: 10px 20px;
+    font-weight: bold;
+    padding: 8px 15px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.nav-links a:hover {
-    background-color: var(--primary-color);
+nav ul li a:hover, nav .btn:hover {
+    background-color: #d0a0b4;
 }
 
-.btn-logout {
-    color: white;
-    background-color: var(--primary-color);
-    padding: 8px 16px;
+h1 {
+    font-size: 2.5em;
+    color: #cc94b4;
+    margin-top: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #8cacb4;
+    text-align: center;
+}
+
+form#contactForm {
+    width: 80%;
+    max-width: 400px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+form label {
+    color: #333;
+    font-weight: bold;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #8cacb4;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #8cacb4;
+    color: #ffffff;
+    font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.btn-logout:hover {
-    background-color: var(--secondary-color);
+form button:hover {
+    background-color: #d0a0b4;
 }
 
-/* Campo de busca */
-.search-container {
+footer {
+    width: 100%;
     text-align: center;
-    margin: 20px 0;
-}
-
-.search-input {
-    width: 80%;
-    max-width: 500px;
     padding: 10px;
-    border: 1px solid var(--light-grey);
-    border-radius: 5px;
-    font-size: 1rem;
+    background-color: #8cacb4;
+    color: #ffffff;
+    position: fixed;
+    bottom: 0;
 }
 
-/* Tabela de Pacientes */
+/* Estilos da Lista de Pacientes */
 .table-container {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
     padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Remover pontos da lista de pacientes */
+/* Estilos para cada item da lista de pacientes */
 .paciente-item {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid var(--light-grey);
-    list-style: none; /* Remove os pontos da lista */
-    padding-left: 0; /* Remove espaçamento à esquerda */
+    align-items: center;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 
+.paciente-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
 
+/* Nome do paciente */
 .paciente-nome {
+    font-size: 1.2em;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #333;
+    margin-right: auto;
 }
 
+/* Links de ação */
 .paciente-item a {
-    color: var(--accent-color);
+    color: #8cacb4;
     text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
     transition: color 0.3s;
 }
 
 .paciente-item a:hover {
-    color: var(--primary-color);
+    color: #d0a0b4;
 }
 
+/* Estilos para o campo de busca */
+.search-container {
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #8cacb4;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #d0a0b4;
+}
+
+/* Estilos para mensagem quando não há pacientes */
 .empty-message {
     text-align: center;
-    color: var(--secondary-color);
-    padding: 20px;
+    font-size: 1.2em;
+    color: #8cacb4;
+    font-weight: bold;
 }
 
-/* Esconder a navegação em telas pequenas e mostrar o ícone */
+/* Media Queries para responsividade */
 @media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        text-align: center;
+    .table-container {
+        width: 95%;
     }
-    .nav-links.show {
-        display: flex;
-    }
-    .menu-icon {
-        display: flex;
-    }
-}
 
-/* Rodapé */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: var(--light-grey);
-    color: var(--text-color);
-    font-size: 0.9rem;
-    margin-top: 20px;
+    .paciente-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .paciente-nome {
+        margin-bottom: 10px;
+    }
+
+    .paciente-item a {
+        margin-left: 0;
+        margin-top: 5px;
+    }
 }

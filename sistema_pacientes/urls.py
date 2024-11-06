@@ -22,6 +22,6 @@ from pacientes import views as pacientes_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', pacientes_views.homepage, name='homepage'),  # URL raiz redirecionada para a homepage
+    path('', pacientes_views.index, name='index'),  # URL raiz redirecionada para a homepage
     path('pacientes/', include('pacientes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

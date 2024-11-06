@@ -5,12 +5,14 @@ from . import views
 from django.contrib.auth import views as auth_views
 from .views import excluir_pagamento, editar_evolucao, excluir_arquivo, detalhes_paciente, evolucoes, listar_pacientes, login_view
 
+
+
 urlpatterns = [
     # Autenticação
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('login/', login_view, name='login'),
     path('', listar_pacientes, name='listar_pacientes'),  # Isso redireciona /pacientes/ para a view de listar pacientes
-    path('logout/', auth_views.LogoutView.as_view(next_page='homepage'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     
     # Pacientes
     path('pacientes/', views.listar_pacientes, name='listar_pacientes'),
