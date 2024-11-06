@@ -1,207 +1,100 @@
-/* Reset básico para margens e preenchimentos */
-* {
+body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-/* Estilo do corpo */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Cor de fundo neutra */
-    color: #333; /* Texto padrão */
-}
-
-/* Título da Página */
-h2 {
+h2, h3 {
     color: #8cacb4; /* Cor do título */
+}
+
+h2 {
     text-align: center;
     margin: 20px 0;
 }
 
-/* Navegação */
 nav {
-    background-color: #d0a0b4; /* Cor de fundo do nav */
-    padding: 10px 0;
+    background-color: #d0a0b4; /* Cor da navegação */
+    padding: 15px;
 }
 
 .nav-links {
-    list-style-type: none;
+    list-style: none; /* Remove os pontos da lista */
+    padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centraliza os links */
 }
 
 .nav-links li {
-    margin: 0 15px;
+    margin: 0 15px; /* Espaçamento entre os links */
 }
 
 .nav-links a {
+    color: #fff; /* Cor do texto dos links */
     text-decoration: none;
-    color: white; /* Cor do texto dos links */
     font-weight: bold;
 }
 
-/* Estilo das tabelas */
+.nav-links a:hover {
+    text-decoration: underline; /* Efeito hover */
+}
+
+.patient-info, .payment-info, .evolucao-container {
+    background: #fff; /* Fundo branco para as seções */
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 800px; /* Largura máxima */
+}
+
 .info-table {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    border-collapse: collapse; /* Remove espaço entre bordas */
+    margin-top: 15px;
 }
 
 .info-table th, .info-table td {
-    border: 1px solid #cc94b4; /* Cor das bordas */
     padding: 10px;
     text-align: left;
+    border-bottom: 1px solid #ddd; /* Linha de separação */
 }
 
 .info-table th {
-    background-color: #cc94b4; /* Cor de fundo do cabeçalho da tabela */
+    background-color: #8cacb4; /* Fundo dos cabeçalhos */
     color: white; /* Cor do texto do cabeçalho */
 }
 
-.btt {
-    background-color: #cc94b4; /* Cor de fundo do botão */
-}
-
-/* Estilo dos botões */
-.btn {
-    background-color: #8cacb4; /* Cor de fundo do botão */
-    color: white; /* Cor do texto do botão */
+.btn, .btt {
+    background-color: #cc94b4; /* Cor dos botões */
+    color: #fff;
     border: none;
-    padding: 8px 15px;
+    padding: 10px 15px;
+    border-radius: 5px; /* Cantos arredondados */
     cursor: pointer;
-    border-radius: 5px; /* Bordas arredondadas */
-    transition: background-color 0.3s;
 }
 
-.btn:hover {
-    background-color: #d0a0b4; /* Cor ao passar o mouse */
-}
-
-.btn-primary {
-    background-color: #cc94b4; /* Cor de fundo dos botões primários */
-}
-
-/* Seções de Informações */
-.patient-info, .payment-info, .files-section, .evolucao-container {
-    background-color: white; /* Fundo branco para as seções */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Espaçamento entre seções */
-}
-
-/* Estilo das Evoluções */
-.evolucao-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.evolucao-container h2 {
-    color: #d0a0b4;
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.nova-evolucao {
-    margin-bottom: 30px;
-}
-
-.nova-evolucao h3 {
-    font-size: 1.5rem;
-    color: #8cacb4;
-    margin-bottom: 10px;
+.btn:hover, .btt:hover {
+    background-color: #d0a0b4; /* Efeito hover nos botões */
 }
 
 textarea {
     width: 100%;
-    min-height: 100px;
-    margin-top: 50px;
+    height: 100px;
+    margin-top: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    resize: vertical;
-    transition: border-color 0.3s ease;
+    border: 1px solid #ddd; /* Borda do textarea */
+    border-radius: 5px; /* Cantos arredondados */
 }
 
-textarea:focus {
-    border-color: #8cacb4;
-    outline: none;
-}
-
-/* Estilo das Evoluções */
-.lista-evolucoes {
-    margin-top: 20px;
-}
-
-.lista-evolucoes h3 {
-    font-size: 1.5rem;
-    color: #8cacb4;
-    margin-bottom: 15px;
-}
-
-.evolucao {
-    background-color: #fafafa;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.evolucao:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.evolucao p {
-    margin: 5px 0;
-}
-
-.evolucao p:first-child {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.evolucao p:last-child {
-    font-size: 1rem;
-    color: #333;
-    line-height: 1.5;
-}
-
-/* Arquivos */
-.files-section h3 {
-    margin-bottom: 15px;
-}
-
-/* Rodapé */
 footer {
     text-align: center;
-    padding: 15px 0;
-    background-color: #d0a0b4; /* Cor do fundo do rodapé */
-    color: white; /* Cor do texto do rodapé */
+    padding: 15px;
+    background-color: #d0a0b4; /* Cor do rodapé */
+    color: #fff;
     position: relative;
     bottom: 0;
     width: 100%;
-}
-
-/* Botões de Ação */
-.edit-btn {
-    background-color: #d0a0b4;
-    margin-right: 10px;
-}
-
-.edit-btn:hover {
-    background-color: #b08794;
-}
-
-.delete-btn {
-    background-color: #ff6b6b;
-}
-
-.delete-btn:hover {
-    background-color: #ff4b4b;
 }

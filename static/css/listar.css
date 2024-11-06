@@ -1,0 +1,158 @@
+/* Paleta de cores */
+:root {
+    --primary-color: #8cacb4;
+    --secondary-color: #8cacb4;
+    --accent-color: #cc94b4;
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --light-grey: #e0e0e0;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+header h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 20px;
+    font-size: 2rem;
+}
+
+.logo {
+    justify-content: center;
+}
+
+/* Navegação */
+nav {
+    background-color: var(--accent-color);
+    padding: 1rem;
+    text-align: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: var(--primary-color);
+}
+
+.btn-logout {
+    color: white;
+    background-color: var(--primary-color);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Campo de busca */
+.search-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.search-input {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Tabela de Pacientes */
+.table-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Remover pontos da lista de pacientes */
+.paciente-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-grey);
+    list-style: none; /* Remove os pontos da lista */
+    padding-left: 0; /* Remove espaçamento à esquerda */
+}
+
+
+.paciente-nome {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.paciente-item a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.paciente-item a:hover {
+    color: var(--primary-color);
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--secondary-color);
+    padding: 20px;
+}
+
+/* Esconder a navegação em telas pequenas e mostrar o ícone */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+    .nav-links.show {
+        display: flex;
+    }
+    .menu-icon {
+        display: flex;
+    }
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: var(--light-grey);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-top: 20px;
+}

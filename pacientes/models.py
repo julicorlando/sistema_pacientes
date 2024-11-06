@@ -7,7 +7,7 @@ class Paciente(models.Model):
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=15)
     endereco = models.CharField(max_length=255)
-    data_de_nascimento = models.DateField(null=True, blank=True)
+    data_nascimento = models.DateField(null=True, blank=True)
     cpf = models.CharField(max_length=11, unique=True)
     sexo = models.CharField(max_length=10, choices=[('Masc', 'Masculino'), ('Fem', 'Feminino'), ('O', 'Outro')])
     email = models.EmailField()
