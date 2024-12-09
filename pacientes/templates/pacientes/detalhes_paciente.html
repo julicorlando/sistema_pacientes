@@ -111,28 +111,47 @@
         </div>
         
     </section>
-<!--
-    <section class="files-section">
-        <h3>Arquivos</h3>
-        <table class="info-table">
-            <tbody>
-                {% for arquivo in paciente.arquivos.all %}
-                    <tr>
-                        <td>
-                            <a href="{{ arquivo.arquivo.url }}">{{ arquivo.arquivo.name }}</a>
-                            <form action="{% url 'excluir_arquivo' paciente.pk arquivo.pk %}" method="post" style="display:inline;">
-                                {% csrf_token %}
-                                <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?');">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr><td>Nenhum arquivo disponível.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
--->
+<!-- Upload de Arquivos -->
+<section class="payment-info">
+    <h2>Arquivos do Paciente</h2>
+    
+    <!-- Formulário de Upload -->
+    <div class="pagamento-area">
+        <h3>Adicionar Novo Arquivo</h3>
+        <form action="{% url 'upload_arquivo' paciente.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="arquivo" required>
+            <button type="submit" class="btn">Enviar Arquivo</button>
+        </form>
+    </div>
+    
+    <!-- Lista de Arquivos -->
+    <h3>Arquivos Existentes</h3>
+    <table class="payment-info">
+        <tbody>
+            {% for arquivo in paciente.arquivos.all %}
+                <tr>
+                    <td>
+                        <a href="{{ arquivo.arquivo.url }}" target="_blank">{{ arquivo.arquivo.name }}</a>
+                    </td>
+                    <td>
+                        <form action="{% url 'excluir_arquivo' paciente.id arquivo.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este arquivo?');">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Nenhum arquivo disponível.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+
+
     <!-- Evoluções -->
     <section class="evolucao-container">
         <h2>Evoluções do Paciente</h2>
@@ -153,6 +172,7 @@
             <li><a href="{% url 'evolucoes' paciente.id %}">Ver Evoluções</a></li>
             <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir Paciente</a></li>
             <li><a href="{% url 'editar_paciente' paciente.id %}">Editar Paciente</a></li>
+            <li><a href="{% url 'listar_pagamentos' paciente.id %}">Ver Pagamentos</a></li>
             <li>
                 <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}

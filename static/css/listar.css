@@ -113,6 +113,7 @@ footer {
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
+    list-style: none;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -124,6 +125,7 @@ footer {
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
+    list-style: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -142,6 +144,7 @@ footer {
     font-weight: bold;
     color: #333;
     margin-right: auto;
+    list-style: none;
 }
 
 /* Links de ação */

@@ -42,6 +42,7 @@
                 <li><a href="{% url 'detalhes_paciente' paciente.id %}">Ver detalhes</a></li>
                 <li><a href="{% url 'excluir_paciente' paciente.id %}">Excluir</a></li>
                 <li><a href="{% url 'editar_paciente' paciente.id %}">Editar</a></li>
+                <li><a href="{% url 'adicionar_pagamento' paciente.id %}" class="btn btn-primary">Adicionar Pagamento</a></li>
             </ul>
         {% empty %}
             <p class="empty-message">Nenhum paciente cadastrado.</p>

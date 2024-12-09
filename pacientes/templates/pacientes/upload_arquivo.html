@@ -13,10 +13,12 @@
 <body class="homepage">
 
     <!-- Título -->
-    <h2>Upload de Arquivo para {{ paciente.nome }}</h2>
+    <header>
+        <h2>Upload de Arquivo para {{ paciente.nome }}</h2>
+    </header>
 
     <!-- Navegação Principal -->
-    <nav>
+    <nav aria-label="Navegação principal">
         <ul class="nav-links">
             <li><a href="{% url 'index' %}">Home</a></li>
             <li><a href="{% url 'listar_pacientes' %}">Listar Pacientes</a></li>
@@ -25,18 +27,22 @@
     </nav>
 
     <!-- Formulário de Upload -->
-    <form method="post" enctype="multipart/form-data" class="form-upload">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn-upload">Enviar</button>
-    </form>
+    <main>
+        <form method="post" enctype="multipart/form-data" class="form-upload">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-upload">Enviar</button>
+        </form>
+    </main>
 
     <!-- Link de Retorno -->
-    <nav class="return-nav">
-        <ul class="nav-links">
-            <li><a href="{% url 'detalhes_paciente' paciente.id %}" class="btn-voltar">Voltar</a></li>
-        </ul>
-    </nav>
+    <footer>
+        <nav aria-label="Navegação de retorno">
+            <ul class="nav-links">
+                <li><a href="{% url 'detalhes_paciente' paciente.id %}" class="btn-voltar">Voltar</a></li>
+            </ul>
+        </nav>
+    </footer>
 
     <!-- Script jQuery -->
     <script>

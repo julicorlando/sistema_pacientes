@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a7%!8h^ns&g*wdms6y#bk^!_3#ur8hj749h^&g)2=nm4cc!kk!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stepsi.com.br', 'www.stepsi.com.br']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -79,10 +79,15 @@ WSGI_APPLICATION = 'sistema_pacientes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # Driver para MySQL
+        'NAME': 'stepsi_db',                 # Nome do banco de dados
+        'USER': 'st185782_stephanycaroline',               # Usuário do banco de dados
+        'PASSWORD': 'Julica121021@',             # Senha do banco de dados
+        'HOST': 'localhost',                 # Servidor do banco
+        'PORT': '3306',                      # Porta do MySQL (padrão é 3306)
     }
 }
+
 
 
 # Password validation
