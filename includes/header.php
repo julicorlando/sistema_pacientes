@@ -47,7 +47,7 @@ $flash = getFlashMessage();
         <ul class="nav-links">
             <li><a href="index.php">Página Inicial</a></li>
             <?php if ($auth->isLoggedIn()): ?>
-                <li><a href="dashboard.php">Acessar Sistema</a></li>
+                <li><a href="dashboard.php">Listar Pacientes</a></li>
                 <li><a href="patient_add.php">Cadastrar Paciente</a></li>
                 <li><a href="register.php">Cadastrar Novo Usuário</a></li>
                 <li>
