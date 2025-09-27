@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
-        fields = ['nome', 'sexo', 'estado_Civil', 'data_nascimento', 'cpf', 'telefone', 'endereco', 'email', 'filhos', 'filhos_Quantidade', 'atendimento', 'atendimento_Tipo_Tempo_Motivo', 'religião', 'escolaridade', 'trabalha_no_momento', 'profissão', 'toma_Algum_Medicamento', 'qual_Medicamento', 'Disponibilidade', 'rede_de_apoio', 'contato_de_emergência', 'motivo_e_objetivo', 'observações' ]
+        fields = ['nome', 'sexo', 'estado_Civil', 'data_nascimento', 'cpf', 'telefone', 'telefone_alternativo', 'endereco', 'email', 'possui_filhos', 'filhos_Quantidade', 'atendimento_anterior', 'atendimento_atual', 'atendimento_Tipo_Tempo_Motivo', 'escolaridade', 'trabalha_no_momento', 'profissão', 'e_menor_de_idade', 'responsavel_nome', 'responsavel_cpf', 'responsavel_endereco', 'responsavel_contato', 'responsavel_parentesco', 'toma_Algum_Medicamento', 'qual_Medicamento', 'Disponibilidade', 'rede_de_apoio', 'contato_de_emergência', 'motivo_e_objetivo', 'observações' ]
 
 class ArquivoForm(forms.ModelForm):
     class Meta:
@@ -31,7 +31,7 @@ class NovoUsuarioForm(UserCreationForm):
 class PagamentoForm(forms.ModelForm):
     class Meta:
         model = Pagamento
-        fields = [ 'valor', 'forma_pagamento']  # Certifique-se de incluir todos os campos necessários
+        fields = ['valor', 'forma_pagamento', 'modalidade_convenio', 'recibo_emitido']  # Updated to include new fields
 
 
 
