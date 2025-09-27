@@ -32,21 +32,32 @@
             <tbody>
                 <tr><td><strong>Nome:</strong> {{ paciente.nome }}</td></tr>
                 <tr><td><strong>Sexo:</strong> {{ paciente.sexo }}</td></tr>
-                <tr><td><strong>Data de Nascimento:</strong> {{ paciente.data_de_nascimento }}</td></tr>
-                <tr><td><strong>Estado Civil:</strong> {{ paciente.estado_civil }}</td></tr>
+                <tr><td><strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}</td></tr>
+                <tr><td><strong>Estado Civil:</strong> {{ paciente.estado_Civil }}</td></tr>
                 <tr><td><strong>Escolaridade:</strong> {{ paciente.escolaridade }}</td></tr>
                 <tr><td><strong>Trabalha no Momento:</strong> {{ paciente.trabalha_no_momento }}</td></tr>
-                <tr><td><strong>Profissão:</strong> {{ paciente.profissao }}</td></tr>
-                <tr><td><strong>Filhos:</strong> {{ paciente.filhos }} ({{ paciente.filhos_quantidade }})</td></tr>
-                <tr><td><strong>Religião:</strong> {{ paciente.religiao }}</td></tr>
-                <tr><td><strong>Usa Medicamentos:</strong> {{ paciente.toma_algum_medicamento }}</td></tr>
-                <tr><td><strong>Qual:</strong> {{ paciente.qual_medicamento }}</td></tr>
-                <tr><td><strong>Rede de Apoio:</strong> {{ paciente.rede_de_apoio }}</td></tr>
-                <tr><td><strong>Contato de Emergência:</strong> {{ paciente.contato_de_emergencia }}</td></tr>
-                <tr><td><strong>Psicoterapia Anterior:</strong> {{ paciente.atendimento }}</td></tr>
-                <tr><td><strong>Detalhes:</strong> {{ paciente.atendimento_tipo_tempo_motivo }}</td></tr>
-                <tr><td><strong>Disponibilidade:</strong> {{ paciente.disponibilidade }}</td></tr>
-                <tr><td><strong>Objetivo:</strong> {{ paciente.motivo_e_objetivo }}</td></tr>
+                <tr><td><strong>Profissão:</strong> {{ paciente.profissão }}</td></tr>
+                <tr><td><strong>Possui Filhos:</strong> {{ paciente.possui_filhos }}{% if paciente.filhos_Quantidade %} ({{ paciente.filhos_Quantidade }}){% endif %}</td></tr>
+                <tr><td><strong>Usa Medicamentos:</strong> {{ paciente.toma_Algum_Medicamento }}</td></tr>
+                {% if paciente.qual_Medicamento %}<tr><td><strong>Medicamentos:</strong> {{ paciente.qual_Medicamento }}</td></tr>{% endif %}
+                {% if paciente.rede_de_apoio %}<tr><td><strong>Rede de Apoio:</strong> {{ paciente.rede_de_apoio }}</td></tr>{% endif %}
+                <tr><td><strong>Contato de Emergência:</strong> {{ paciente.contato_de_emergência }}</td></tr>
+                
+                <!-- Minor/Guardian information -->
+                <tr><td><strong>É menor de idade/tutelado:</strong> {{ paciente.e_menor_de_idade }}</td></tr>
+                {% if paciente.e_menor_de_idade == "Sim" %}
+                    {% if paciente.responsavel_nome %}<tr><td><strong>Nome do Responsável:</strong> {{ paciente.responsavel_nome }}</td></tr>{% endif %}
+                    {% if paciente.responsavel_cpf %}<tr><td><strong>CPF do Responsável:</strong> {{ paciente.responsavel_cpf }}</td></tr>{% endif %}
+                    {% if paciente.responsavel_endereco %}<tr><td><strong>Endereço do Responsável:</strong> {{ paciente.responsavel_endereco }}</td></tr>{% endif %}
+                    {% if paciente.responsavel_contato %}<tr><td><strong>Contato do Responsável:</strong> {{ paciente.responsavel_contato }}</td></tr>{% endif %}
+                    {% if paciente.responsavel_parentesco %}<tr><td><strong>Parentesco/Relação:</strong> {{ paciente.responsavel_parentesco }}</td></tr>{% endif %}
+                {% endif %}
+                
+                <tr><td><strong>Psicoterapia Anterior:</strong> {{ paciente.atendimento_anterior }}</td></tr>
+                {% if paciente.atendimento_anterior == "Sim" %}<tr><td><strong>Detalhes do Atendimento Anterior:</strong> {{ paciente.atendimento_Tipo_Tempo_Motivo }}</td></tr>{% endif %}
+                {% if paciente.atendimento_atual %}<tr><td><strong>Atendimento Atual:</strong> {{ paciente.atendimento_atual }}</td></tr>{% endif %}
+                <tr><td><strong>Disponibilidade:</strong> {{ paciente.Disponibilidade }}</td></tr>
+                <tr><td><strong>Motivo e Objetivo:</strong> {{ paciente.motivo_e_objetivo }}</td></tr>
             </tbody>
         </table>
 
@@ -58,7 +69,8 @@
                 <tr><td><strong>CPF:</strong> {{ paciente.cpf }}</td></tr>
                 <tr><td><strong>Email:</strong> {{ paciente.email }}</td></tr>
                 <tr><td><strong>Telefone:</strong> {{ paciente.telefone }}</td></tr>
-                <tr><td><strong>Observações:</strong> {{ paciente.observacoes }}</td></tr>
+                {% if paciente.telefone_alternativo %}<tr><td><strong>Telefone Alternativo:</strong> {{ paciente.telefone_alternativo }}</td></tr>{% endif %}
+                {% if paciente.observações %}<tr><td><strong>Observações:</strong> {{ paciente.observações }}</td></tr>{% endif %}
             </tbody>
         </table>
     </section>
@@ -82,28 +94,32 @@
                     <tr>
                         <th>Data do Pagamento</th>
                         <th>Forma de Pagamento</th>
+                        <th>Modalidade</th>
                         <th>Valor</th>
+                        <th>Recibo Emitido</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for pagamento in pagamentos %}
                         <tr>
-                            <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td> <!-- Exibe a data formatada -->
-                            <td>{{ pagamento.forma_pagamento }}</td> <!-- Exibe a forma de pagamento -->
-                            <td><strong>R$ </strong>{{ pagamento.valor }}</td> <!-- Exibe o valor do pagamento -->
+                            <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                            <td>{{ pagamento.forma_pagamento }}</td>
+                            <td>{% if pagamento.modalidade_convenio %}{{ pagamento.modalidade_convenio }}{% else %}-{% endif %}</td>
+                            <td><strong>R$ </strong>{{ pagamento.valor }}</td>
+                            <td>{% if pagamento.recibo_emitido == "Sim" %}✓ Sim{% else %}✗ Não{% endif %}</td>
         
                             <!-- Botão para excluir o pagamento -->
                             <td>
                                 <form action="{% url 'excluir_pagamento' paciente.id pagamento.id %}" method="post" style="display:inline;">
                                     {% csrf_token %}
-                                    <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir Pagamento</button>
+                                    <button class="btn" type="submit" onclick="return confirm('Tem certeza que deseja excluir este pagamento?');">Excluir</button>
                                 </form>
                             </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3">Nenhum pagamento encontrado.</td>
+                            <td colspan="6">Nenhum pagamento encontrado.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
