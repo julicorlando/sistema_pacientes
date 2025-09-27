@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'sistema_pacientes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Driver para MySQL
-        'NAME': 'stepsi_db',                 # Nome do banco de dados
-        'USER': 'st185782_stephanycaroline',               # Usuário do banco de dados
-        'PASSWORD': 'Julica121021@',             # Senha do banco de dados
-        'HOST': 'localhost',                 # Servidor do banco
-        'PORT': '3306',                      # Porta do MySQL (padrão é 3306)
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
